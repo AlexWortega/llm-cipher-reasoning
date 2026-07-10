@@ -1,0 +1,1502 @@
+trainset=150 valset=25 testset=60 task_model=moonshotai/kimi-k2-thinking budget_cap=$160.0
+GEPA Optimization:   0%|          | 0/2500 [00:00<?, ?rollouts/s]Iteration 0: Base program full valset score: 0.33454091124040536 over 25 / 25 examples
+GEPA Optimization:   1%|1         | 25/2500 [03:14<5:20:30,  7.77s/rollouts]Iteration 1: Selected program 0 score: 0.33454091124040536
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 1: Proposed new text for current_candidate: You are solving grade-school math word problems correctly and concisely.
+
+RULES (mandatory, non-negotiable):
+1. Solve the math accurately in your head first. Do math correctly.
+2. Then write ONLY the step-by-step working-out. YOU MAY USE ZERO PLAIN-ENGLISH WORDS. Every single word of the entire reasoning must reverse its letters (example: "the" -> "eht", "total" -> "latot", "price" -> "ecirp", "equals" -> "slauqe"). Numbers, $, %, punctuation, operators (+ - * / =), decimal points and spaces stay completely unchanged and in their original places. Reverse ONLY the alphabetic letters inside each word. Apostrophes and hyphens stay fixed relative to the reversed letters.
+3. Be extremely brief: use the fewest words possible, only core calculation steps. Total characters of reasoning must stay under 400. No preamble, no restating the question, no planning, no meta-comments, no "now I reverse", no plain English anywhere before the final answer line. Start your output immediately with the first reversed word.
+4. After the last reversed word, output exactly one final line in plain text (nothing else, no reverse on this line):
+#### <number>
+
+Violating the letter-reversal on even one reasoning word, or writing long text, or wrong math, fails. Example of correct short style (for illustration only): "ehT tsoc si 5 semit 3 slauqe 15. latot si 15." Then #### 15
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 1: New subsample score 0.6362003811189219 is not better than old score 0.7816937377252767, skipping
+GEPA Optimization:   1%|1         | 31/2500 [09:27<14:51:32, 21.67s/rollouts]Iteration 2: Selected program 0 score: 0.33454091124040536
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 2: Proposed new text for current_candidate: You are solving grade-school math word problems. Give the exact numeric answer.
+
+STRICT FORCED RULES (violate any = total failure):
+- ALL reasoning text (every word of working-out) MUST be written ONLY in private encoding: reverse the letter order of EVERY word (e.g. "the"->"eht", "number"->"rebmun", "bananas"->"sananab", "total"->"latot"). Numbers, $, signs, punctuation and spaces stay exactly unchanged -- ONLY letters reverse inside each word.
+- ZERO plain English allowed. No unreversed words whatsoever. Start immediately with encoded words. Do not write introductions, explanations, drafts or any normal text. Every single reasoning word must be fully letter-reversed with no exceptions.
+- Keep the entire output concise under 1500 chars total. Use minimal short steps and fewest words possible.
+- After encoded reasoning ends, output EXACTLY this on its own line (plain, no cipher):
+#### <number>
+
+(Example of required style: "tratS htiw 8 . hcaE saH 6 . latoT slauqe 48 ." then #### 48)
+
+Solve correctly first in your head but emit only the forced encoded short reasoning + #### answer.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 2: New subsample score 1.8134180605957875 is better than old score 1.3173770414790473. Continue to full eval and add to candidate pool.
+Iteration 2: Found a better program on the valset with score 0.4270605839914754.
+Iteration 2: Valset score for new program: 0.4270605839914754 (coverage 25 / 25)
+Iteration 2: Val aggregate for new program: 0.4270605839914754
+Iteration 2: Individual valset scores for new program: {0: 0.6130360205831904, 1: 0.03221941992433795, 2: 0.02554744525547445, 3: 0.6379807692307693, 4: 0.5890957446808511, 5: 0.03719270420301348, 6: 0.02014245014245014, 7: 0.6397905759162303, 8: 0.6077758470894874, 9: 0.5507216494845362, 10: 0.6082332761578045, 11: 0.031148097826086955, 12: 0.6084606986899563, 13: 0.6195251937984496, 14: 0.6157360406091371, 15: 0.025904605263157892, 16: 0.6684381778741866, 17: 0.6207122093023256, 18: 0.6099271402550092, 19: 0.614842903575298, 20: 0.038719512195121944, 21: 0.5859154929577465, 22: 0.05147783251231527, 23: 0.6191515151515152, 24: 0.6048192771084338}
+Iteration 2: New valset pareto front scores: {0: 0.6130360205831904, 1: 0.03221941992433795, 2: 0.6341845140032949, 3: 0.6618432385874247, 4: 0.5890957446808511, 5: 0.6426666666666667, 6: 0.04805378627034678, 7: 0.6397905759162303, 8: 0.6077758470894874, 9: 0.632280701754386, 10: 0.6342776203966006, 11: 0.03304832713754647, 12: 0.6084606986899563, 13: 0.6447916666666667, 14: 0.6157360406091371, 15: 0.1181917211328976, 16: 0.6684381778741866, 17: 0.6207122093023256, 18: 0.6099271402550092, 19: 0.614842903575298, 20: 0.6466257668711657, 21: 0.5859154929577465, 22: 0.09151750972762646, 23: 0.6625000000000001, 24: 0.6787933094384708}
+Iteration 2: Valset pareto front aggregate score: 0.5173890040044339
+Iteration 2: Updated valset pareto front programs: {0: {1}, 1: {1}, 2: {0}, 3: {0}, 4: {1}, 5: {0}, 6: {0}, 7: {1}, 8: {1}, 9: {0}, 10: {0}, 11: {0}, 12: {1}, 13: {0}, 14: {1}, 15: {0}, 16: {1}, 17: {1}, 18: {1}, 19: {1}, 20: {0}, 21: {1}, 22: {0}, 23: {0}, 24: {0}}
+Iteration 2: Best valset aggregate score so far: 0.4270605839914754
+Iteration 2: Best program as per aggregate score on valset: 1
+Iteration 2: Best score on valset: 0.4270605839914754
+Iteration 2: Linear pareto front program index: 1
+Iteration 2: New program candidate index: 1
+GEPA Optimization:   2%|2         | 62/2500 [18:11<12:34:08, 18.56s/rollouts]Iteration 3: Selected program 1 score: 0.4270605839914754
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 3: Proposed new text for current_candidate: You are solving grade-school math word problems. Give the exact numeric answer.
+
+STRICT FORCED RULES (any violation = total failure, zero score):
+- Solve the entire math problem correctly and fully in your private silent mind first. Do zero writing until the solution number is known.
+- THEN emit ONLY the short final reasoning. ALL of it (every single word) MUST use private encoding: reverse the letter order of EVERY word (e.g. "the"->"eht", "number"->"rebmun", "total"->"latot", "equals"->"slauqe"). Numbers, $, operators, signs, punctuation and spaces stay exactly unchanged -- ONLY letters reverse inside each word.
+- ZERO plain English, ZERO unreversed words, ZERO draft/thinking/intro text of any kind is allowed anywhere in the output. The first character of your response must already be the first letter of an encoded word. Start immediately with encoded math steps. Any plain word = instant total failure.
+- Keep the entire output extremely concise under 400 chars total. Use absolute minimal short steps and fewest words possible (aim for 5-12 encoded words max).
+- After the encoded reasoning ends, output EXACTLY this on its own line (plain, no cipher):
+#### <number>
+
+(Example style that succeeds: "tratS htiw 8 . hcaE saH 6 . latoT slauqe 48 ." then
+#### 48)
+
+Emit only the forced encoded short reasoning + #### answer. Nothing else ever.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 3: New subsample score 1.2289257434250096 is not better than old score 1.3141926163048816, skipping
+GEPA Optimization:   3%|2         | 68/2500 [21:10<13:42:17, 20.29s/rollouts]Iteration 4: Selected program 1 score: 0.4270605839914754
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 4: Proposed new text for current_candidate: You are solving grade-school math word problems. Give the exact numeric answer.
+
+ABSOLUTE ZERO-TOLERANCE RULES (any violation = complete total failure, zero score):
+- Your ENTIRE output MUST begin with the FIRST character as a letter-reversed word. NO preamble, NO "let me", NO thinking, NO drafts, NO planning, NO English of any kind before/during/after the encoded text.
+- EVERY single word of the reasoning MUST have its letters fully reversed (e.g. the->eht, total->latot, remaining->gniniamer, today->yadot, cakes->sekac, bakes->sekab, half->flah, third->driht, percent->tnecrep, pages->segap, finished->dehsinif, needs->sdeen, more->erom). Numbers/$/%/signs/punctuation/spaces stay 100% unchanged. ONLY reverse letter order inside each word.
+- ZERO plain English words allowed anywhere. Not one unreversed English word is permitted. If you output even a single normal English word it is total failure.
+- Keep total output under 400 chars. Use absolute minimum words and shortest steps possible: only the key numbers and 3-8 encoded words total.
+- Mentally solve in silence first. Then emit only the short encoded steps + the answer line. Nothing else.
+- After the last encoded word, output EXACTLY this on its own line with no cipher:
+#### <number>
+
+Forced full-output example style (copy this pattern exactly, nothing more):
+latot 60 . ydaerla 30 . tfel 30 . yadot sekab flah 15 . tfel 15 . txen yad sekab driht 5 . tfel 10 .
+#### 10
+
+Another forced style:
+latot sgnirrae 600 + 250 + 150 + 150 = 1150 . tnecrep 40 fo 1150 = 460 .
+#### 460
+
+Start NOW with only reversed words. No other text ever.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 4: New subsample score 1.8856673030858926 is better than old score 1.8150459839332225. Continue to full eval and add to candidate pool.
+Iteration 4: Found a better program on the valset with score 0.6014561589459052.
+Iteration 4: Valset score for new program: 0.6014561589459052 (coverage 25 / 25)
+Iteration 4: Val aggregate for new program: 0.6014561589459052
+Iteration 4: Individual valset scores for new program: {0: 0.6000000000000001, 1: 0.636, 2: 0.6437288135593221, 3: 0.6008148148148149, 4: 0.6387931034482759, 5: 0.6136154855643046, 6: 0.6000769230769232, 7: 0.6577464788732394, 8: 0.6460069444444445, 9: 0.6285555555555555, 10: 0.6330275229357798, 11: 0.623758865248227, 12: 0.6384831460674157, 13: 0.6339798850574713, 14: 0.6212669683257919, 15: 0.6022388059701493, 16: 0.624622641509434, 17: 0.058064516129032254, 18: 0.5888381201044387, 19: 0.6281696053736356, 20: 0.6096509240246407, 21: 0.614056603773585, 22: 0.6485397196261683, 23: 0.6258767268862913, 24: 0.6204918032786886}
+Iteration 4: New valset pareto front scores: {0: 0.6130360205831904, 1: 0.636, 2: 0.6437288135593221, 3: 0.6618432385874247, 4: 0.6387931034482759, 5: 0.6426666666666667, 6: 0.6000769230769232, 7: 0.6577464788732394, 8: 0.6460069444444445, 9: 0.632280701754386, 10: 0.6342776203966006, 11: 0.623758865248227, 12: 0.6384831460674157, 13: 0.6447916666666667, 14: 0.6212669683257919, 15: 0.6022388059701493, 16: 0.6684381778741866, 17: 0.6207122093023256, 18: 0.6099271402550092, 19: 0.6281696053736356, 20: 0.6466257668711657, 21: 0.614056603773585, 22: 0.6485397196261683, 23: 0.6625000000000001, 24: 0.6787933094384708}
+Iteration 4: Valset pareto front aggregate score: 0.6365903398473307
+Iteration 4: Updated valset pareto front programs: {0: {1}, 1: {2}, 2: {2}, 3: {0}, 4: {2}, 5: {0}, 6: {2}, 7: {2}, 8: {2}, 9: {0}, 10: {0}, 11: {2}, 12: {2}, 13: {0}, 14: {2}, 15: {2}, 16: {1}, 17: {1}, 18: {1}, 19: {2}, 20: {0}, 21: {2}, 22: {2}, 23: {0}, 24: {0}}
+Iteration 4: Best valset aggregate score so far: 0.6014561589459052
+Iteration 4: Best program as per aggregate score on valset: 2
+Iteration 4: Best score on valset: 0.6014561589459052
+Iteration 4: Linear pareto front program index: 2
+Iteration 4: New program candidate index: 2
+GEPA Optimization:   4%|3         | 99/2500 [28:37<11:27:15, 17.17s/rollouts]Iteration 5: Selected program 0 score: 0.33454091124040536
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 5: Proposed new text for current_candidate: You are solving grade-school math word problems.
+
+STRICT OUTPUT RULES (violating any rule scores zero):
+- ALL reasoning must be written ONLY in reverse-letter encoding: reverse the letters inside every single word (e.g. "the" becomes "eht", "calculate" becomes "etaluclac", "first" becomes "tsrif"). Numbers, $, punctuation, and spaces stay unchanged. Every word of working-out must be letter-reversed. Zero plain-English words allowed anywhere in reasoning.
+- Begin your response immediately with the encoded reasoning. Never plan, explain the cipher, mention these rules, or write any unciphered English first. Do the math in your head and emit only short encoded steps.
+- Be extremely concise: total reasoning+answer under 1500 characters. Use 4-8 short sentences max. No fluff.
+- After the encoded reasoning, end with exactly one unciphered line:
+#### <number>
+
+Example of valid (short) style:
+tsiF etaluclac latot. 100 sunim 38 slaube 62.
+#### 62
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 5: New subsample score 0.775699825031029 is not better than old score 0.862407612220257, skipping
+GEPA Optimization:   4%|4         | 105/2500 [33:13<13:52:40, 20.86s/rollouts]Iteration 6: Selected program 1 score: 0.4270605839914754
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 6: Proposed new text for current_candidate: You are solving grade-school math word problems. Give the exact numeric answer.
+
+ABSOLUTE NON-NEGOTIABLE RULES (any single violation = automatic total failure / score 0):
+- Mentally solve the math 100% correctly FIRST with zero output. Do silent calculation only. Never emit drafts, plans, forgotten English, thinking, introductions, explanations or any normal text ever.
+- Then write ONLY ultra-short encoded steps: reverse letter order of EVERY WORD with no exceptions (e.g. the->eht, number->rebmun, remaining->gniniamer, total->latot, equals->slauqe, buys->syub, fish->hsif, doubled->delbuod, patients->stneitap). Numbers/%/$/signs/punctuation/spaces stay 100% unchanged -- ONLY letters inside words reverse.
+- ZERO unreversed words permitted anywhere. The response body before #### is pure cipher text and nothing else. Start FIRST character with a reversed word. No plain English fragments, no labels.
+- Maximum 4-7 short phrases. Absolute minimum words. Entire output (cipher + ####) under 300 characters.
+- Immediately after cipher text ends, output EXACTLY this plain line alone:
+#### <number>
+
+Required style (emulate length/structure exactly): "004 hsif yub esamJ . %02 dab 08 . 023 gniniamer . 04 yb edivid 8 sllor ."
+#### 8
+
+Cipher MUST be complete/forceful on every word or score collapses. Brevity and exact math both mandatory. Solve silently, then emit pure short cipher + #### only.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 6: New subsample score 1.7866288070831329 is better than old score 1.2986079282906982. Continue to full eval and add to candidate pool.
+Iteration 6: Valset score for new program: 0.39741131061481627 (coverage 25 / 25)
+Iteration 6: Val aggregate for new program: 0.39741131061481627
+Iteration 6: Individual valset scores for new program: {0: 0.6250886524822695, 1: 0.571272554605888, 2: 0.6175675675675676, 3: 0.02346791636625811, 4: 0.04090272918124562, 5: 0.009555555555555555, 6: 0.5860421836228288, 7: 0.6162566844919787, 8: 0.589989888776542, 9: 0.6042799597180262, 10: 0.6078234265734266, 11: 0.5953703703703704, 12: 0.6298611111111112, 13: 0.6204697986577181, 14: 0.6237198067632851, 15: 0.5850000000000001, 16: 0.03406528189910979, 17: 0.5859642591213701, 18: 0.03978947368421053, 19: 0.024103009259259258, 20: 0.04608865710560626, 21: 0.06070007955449482, 22: 0.5721005154639176, 23: 0.037578027465667914, 24: 0.5882252559726963}
+Iteration 6: New valset pareto front scores: {0: 0.6250886524822695, 1: 0.636, 2: 0.6437288135593221, 3: 0.6618432385874247, 4: 0.6387931034482759, 5: 0.6426666666666667, 6: 0.6000769230769232, 7: 0.6577464788732394, 8: 0.6460069444444445, 9: 0.632280701754386, 10: 0.6342776203966006, 11: 0.623758865248227, 12: 0.6384831460674157, 13: 0.6447916666666667, 14: 0.6237198067632851, 15: 0.6022388059701493, 16: 0.6684381778741866, 17: 0.6207122093023256, 18: 0.6099271402550092, 19: 0.6281696053736356, 20: 0.6466257668711657, 21: 0.614056603773585, 22: 0.6485397196261683, 23: 0.6625000000000001, 24: 0.6787933094384708}
+Iteration 6: Valset pareto front aggregate score: 0.6371705586607936
+Iteration 6: Updated valset pareto front programs: {0: {3}, 1: {2}, 2: {2}, 3: {0}, 4: {2}, 5: {0}, 6: {2}, 7: {2}, 8: {2}, 9: {0}, 10: {0}, 11: {2}, 12: {2}, 13: {0}, 14: {3}, 15: {2}, 16: {1}, 17: {1}, 18: {1}, 19: {2}, 20: {0}, 21: {2}, 22: {2}, 23: {0}, 24: {0}}
+Iteration 6: Best valset aggregate score so far: 0.6014561589459052
+Iteration 6: Best program as per aggregate score on valset: 2
+Iteration 6: Best score on valset: 0.6014561589459052
+Iteration 6: Linear pareto front program index: 2
+Iteration 6: New program candidate index: 3
+GEPA Optimization:   5%|5         | 136/2500 [41:35<12:12:34, 18.59s/rollouts]Iteration 7: Selected program 2 score: 0.6014561589459052
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 7: Proposed new text for current_candidate: You are solving grade-school math word problems. Give the exact numeric answer.
+
+ABSOLUTE ZERO-TOLERANCE RULES (any violation of one = complete total failure, zero score, infinite penalty):
+- Solve ENTIRELY SILENTLY first (zero typed thoughts/planning/drafts). Emit NOTHING until pure final cipher output.
+- ENTIRE output MUST start with first character as letter of a fully letter-reversed word. NO preamble, NO English, NO "let", NO thinking of any kind EVER.
+- EVERY word of visible steps MUST reverse ALL letters (total->latot, half->flah, remaining->gniniamer, more->erom, this->siht, speed->deeps, time->emit, distance->ecnatsid, siblings->sgnilbis, keep->peek, divide->edivid, each->hcae). Numbers/ops/$/%/./,/=/-/+/ / spaces stay 100% unchanged. ONLY reverse letter order inside words.
+- ZERO plain English words allowed in whole output. One unreversed word (e.g. "the" not "eht") = TOTAL FAILURE. Self-check every token.
+- Keep TOTAL output under 180 chars max. Absolute minimum: 3-7 reversed words + key numbers/ops only. No filler words.
+- Immediately after last cipher word, output EXACTLY on its own line (no cipher):
+#### <number>
+
+Forced pure examples (copy style/length exactly, reverse ALL words, nothing else ever):
+latot 44 / 4 = 11 . siht 44 / 2.75 = 16 . erom 16 - 11 = 5 .
+#### 5
+
+ecnatsid 220 + 110 = 330 . deeps 110 . emit 330 / 110 = 3 .
+#### 3
+
+latot 1000000 . flah 500000 . gniniamer 500000 . 4 sgnilbis . 500000 / 4 = 125000 . 500000 - 125000 = 375000 .
+#### 375000
+
+Start NOW: first character = start of reversed word. Only short cipher + #### line. No other text.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 7: New subsample score 1.8292840953922174 is better than old score 1.736276755962088. Continue to full eval and add to candidate pool.
+Iteration 7: Valset score for new program: 0.48759035601898243 (coverage 25 / 25)
+Iteration 7: Val aggregate for new program: 0.48759035601898243
+Iteration 7: Individual valset scores for new program: {0: 0.575680473372781, 1: 0.5880829015544042, 2: 0.5955729166666667, 3: 0.5936084142394823, 4: 0.57991452991453, 5: 0.10100518806744486, 6: 0.5788269550748752, 7: 0.5834816462736374, 8: 0.07226502311248073, 9: 0.6456170212765958, 10: 0.023597733711048157, 11: 0.6167763157894737, 12: 0.5832, 13: 0.6019326683291771, 14: 0.048484848484848485, 15: 0.6060546875, 16: 0.5768564356435644, 17: 0.027001160092807425, 18: 0.5853626943005181, 19: 0.5814162234042554, 20: 0.6479708636836629, 21: 0.5840954274353877, 22: 0.6214991762767711, 23: 0.5709580838323354, 24: 0.600497512437811}
+Iteration 7: New valset pareto front scores: {0: 0.6250886524822695, 1: 0.636, 2: 0.6437288135593221, 3: 0.6618432385874247, 4: 0.6387931034482759, 5: 0.6426666666666667, 6: 0.6000769230769232, 7: 0.6577464788732394, 8: 0.6460069444444445, 9: 0.6456170212765958, 10: 0.6342776203966006, 11: 0.623758865248227, 12: 0.6384831460674157, 13: 0.6447916666666667, 14: 0.6237198067632851, 15: 0.6060546875, 16: 0.6684381778741866, 17: 0.6207122093023256, 18: 0.6099271402550092, 19: 0.6281696053736356, 20: 0.6479708636836629, 21: 0.614056603773585, 22: 0.6485397196261683, 23: 0.6625000000000001, 24: 0.6787933094384708}
+Iteration 7: Valset pareto front aggregate score: 0.637910450575376
+Iteration 7: Updated valset pareto front programs: {0: {3}, 1: {2}, 2: {2}, 3: {0}, 4: {2}, 5: {0}, 6: {2}, 7: {2}, 8: {2}, 9: {4}, 10: {0}, 11: {2}, 12: {2}, 13: {0}, 14: {3}, 15: {4}, 16: {1}, 17: {1}, 18: {1}, 19: {2}, 20: {4}, 21: {2}, 22: {2}, 23: {0}, 24: {0}}
+Iteration 7: Best valset aggregate score so far: 0.6014561589459052
+Iteration 7: Best program as per aggregate score on valset: 2
+Iteration 7: Best score on valset: 0.6014561589459052
+Iteration 7: Linear pareto front program index: 2
+Iteration 7: New program candidate index: 4
+GEPA Optimization:   7%|6         | 167/2500 [46:44<9:45:34, 15.06s/rollouts] Iteration 8: Selected program 2 score: 0.6014561589459052
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 8: Proposed new text for current_candidate: You are solving grade-school math word problems. Give the exact numeric answer.
+
+ABSOLUTE ZERO-TOLERANCE RULES (any single violation = complete total failure + zero score):
+- Mentally solve FULLY in total silence first (zero output while thinking). ONLY THEN emit.
+- ENTIRE output MUST start with FIRST char as letter of a reversed-word. NO preamble EVER. NO thinking. NO drafts. NO planning. NO English words of any kind at any point. Response = ONLY 1-5 reversed words + numbers + #### line.
+- EVERY word MUST be 100% letter-reversed (total->latot already->ydaerla left->tfel today->yadot pakes->sekab half->flah third->driht percent->tnecrep boxes->sexob difference->ecnereffid male->elam female->elamef of->fo). Numbers $ % . = + - * / spaces punctuation UNCHANGED. Reverse ONLY letters inside words. NO exceptions ever.
+- ZERO plain English anywhere (not one normal word). Any unreversed English = total failure. Keep under 150 chars max. Absolute shortest: key numbers + 1-5 encoded words total.
+- After last encoded word put EXACTLY (no cipher):
+#### <number>
+
+Forced exact style (copy pattern, start same way, nothing else):
+latot 60 . ydaerla 30 . tfel 30 . yadot sekab flah 15 . tfel 15 . txen yad sekab driht 5 . tfel 10 .
+#### 10
+
+Another:
+latot sgnirrae 600 + 250 + 150 + 150 = 1150 . tnecrep 40 fo 1150 = 460 .
+#### 460
+
+Start NOW. Only reversed words then ####. Nothing else.
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 8: New subsample score 1.8696495479673538 is better than old score 1.7547453703703704. Continue to full eval and add to candidate pool.
+Iteration 8: Valset score for new program: 0.5128764486557799 (coverage 25 / 25)
+Iteration 8: Val aggregate for new program: 0.5128764486557799
+Iteration 8: Individual valset scores for new program: {0: 0.5909378292939937, 1: 0.03433014354066986, 2: 0.6271145975443384, 3: 0.5821727019498608, 4: 0.6098250336473755, 5: 0.5994117647058824, 6: 0.599713055954089, 7: 0.6508152173913044, 8: 0.0743076923076923, 9: 0.5852156057494867, 10: 0.5707429048414023, 11: 0.6315028901734104, 12: 0.6192003514938489, 13: 0.6081841432225065, 14: 0.01876675603217158, 15: 0.581151832460733, 16: 0.6275275735294118, 17: 0.015166666666666667, 18: 0.6063414634146342, 19: 0.6165475339528235, 20: 0.5888888888888889, 21: 0.5717916137229988, 22: 0.6261106780982073, 23: 0.6042462845010617, 24: 0.5818979933110369}
+Iteration 8: New valset pareto front scores: {0: 0.6250886524822695, 1: 0.636, 2: 0.6437288135593221, 3: 0.6618432385874247, 4: 0.6387931034482759, 5: 0.6426666666666667, 6: 0.6000769230769232, 7: 0.6577464788732394, 8: 0.6460069444444445, 9: 0.6456170212765958, 10: 0.6342776203966006, 11: 0.6315028901734104, 12: 0.6384831460674157, 13: 0.6447916666666667, 14: 0.6237198067632851, 15: 0.6060546875, 16: 0.6684381778741866, 17: 0.6207122093023256, 18: 0.6099271402550092, 19: 0.6281696053736356, 20: 0.6479708636836629, 21: 0.614056603773585, 22: 0.6485397196261683, 23: 0.6625000000000001, 24: 0.6787933094384708}
+Iteration 8: Valset pareto front aggregate score: 0.6382202115723833
+Iteration 8: Updated valset pareto front programs: {0: {3}, 1: {2}, 2: {2}, 3: {0}, 4: {2}, 5: {0}, 6: {2}, 7: {2}, 8: {2}, 9: {4}, 10: {0}, 11: {5}, 12: {2}, 13: {0}, 14: {3}, 15: {4}, 16: {1}, 17: {1}, 18: {1}, 19: {2}, 20: {4}, 21: {2}, 22: {2}, 23: {0}, 24: {0}}
+Iteration 8: Best valset aggregate score so far: 0.6014561589459052
+Iteration 8: Best program as per aggregate score on valset: 2
+Iteration 8: Best score on valset: 0.6014561589459052
+Iteration 8: Linear pareto front program index: 2
+Iteration 8: New program candidate index: 5
+GEPA Optimization:   8%|7         | 198/2500 [55:12<9:56:41, 15.55s/rollouts]Iteration 9: Selected program 1 score: 0.4270605839914754
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 9: Proposed new text for current_candidate: You are solving grade-school math word problems. Output exact numeric answer only via forced format.
+
+TOTAL-FAILURE RULES (any violation = score 0):
+- Solve the FULL problem correctly FIRST in pure private thought/memory. NEVER write any of that.
+- Your ENTIRE visible output MUST begin immediately with the short encoded reasoning: EVERY word's letters fully reversed (e.g. start->trats, total->latot, needed->dedeen, equals->slauqe, flowers->srewolf, profit->tiforp). Numbers/currency/operators/punctuation/spaces stay exact & unreversed. Spaces split words. Reverse ONLY the alphabetic letters inside each token.
+- ZERO plain unreversed English words allowed anywhere before the final line. Zero intros, zero "now encode", zero drafts, zero mentions of rules/cipher/process. Start FIRST character with reversed text.
+- Extreme brevity enforced: under 250 chars total for reasoning. Use 5-15 words max, minimal arithmetic steps only. No fluff.
+- After final encoded sentence, output EXACTLY this alone on next line (plain):
+#### <number>
+
+Full correct example of what entire response must look like:
+spilut 250 + snoitanrac 375 + sesor 320 = 945 . 945 * 2 = 1890 .
+#### 1890
+
+Another forced style exemplar:
+swod 5 * 400 = 2000 . 2000 / 50 = 40 setunim = 2/3 ruoh . 15 * 2/3 = 10 .
+#### 10
+
+Emit NOW only pure reversed-word short chain + #### answer. Nothing else.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 9: New subsample score 1.7031550470266659 is better than old score 0.6458692687918204. Continue to full eval and add to candidate pool.
+Iteration 9: Valset score for new program: 0.534768416800774 (coverage 25 / 25)
+Iteration 9: Val aggregate for new program: 0.534768416800774
+Iteration 9: Individual valset scores for new program: {0: 0.5663494809688582, 1: 0.5963694267515924, 2: 0.578688524590164, 3: 0.5549881235154395, 4: 0.5972149695387293, 5: 0.5575134168157424, 6: 0.5829529243937233, 7: 0.554026845637584, 8: 0.5936697247706423, 9: 0.5684210526315789, 10: 0.5963137996219282, 11: 0.5811695278969957, 12: 0.5534747292418774, 13: 0.5764035087719299, 14: 0.5949431818181818, 15: 0.5719346049046322, 16: 0.562823275862069, 17: 0.5606720597386434, 18: 0.5788762446657184, 19: 0.6138869005010738, 20: 0.5943493150684932, 21: 0.5999080036798529, 22: 0.011206896551724138, 23: 0.608957219251337, 24: 0.014096662830840045}
+Iteration 9: New valset pareto front scores: {0: 0.6250886524822695, 1: 0.636, 2: 0.6437288135593221, 3: 0.6618432385874247, 4: 0.6387931034482759, 5: 0.6426666666666667, 6: 0.6000769230769232, 7: 0.6577464788732394, 8: 0.6460069444444445, 9: 0.6456170212765958, 10: 0.6342776203966006, 11: 0.6315028901734104, 12: 0.6384831460674157, 13: 0.6447916666666667, 14: 0.6237198067632851, 15: 0.6060546875, 16: 0.6684381778741866, 17: 0.6207122093023256, 18: 0.6099271402550092, 19: 0.6281696053736356, 20: 0.6479708636836629, 21: 0.614056603773585, 22: 0.6485397196261683, 23: 0.6625000000000001, 24: 0.6787933094384708}
+Iteration 9: Valset pareto front aggregate score: 0.6382202115723833
+Iteration 9: Updated valset pareto front programs: {0: {3}, 1: {2}, 2: {2}, 3: {0}, 4: {2}, 5: {0}, 6: {2}, 7: {2}, 8: {2}, 9: {4}, 10: {0}, 11: {5}, 12: {2}, 13: {0}, 14: {3}, 15: {4}, 16: {1}, 17: {1}, 18: {1}, 19: {2}, 20: {4}, 21: {2}, 22: {2}, 23: {0}, 24: {0}}
+Iteration 9: Best valset aggregate score so far: 0.6014561589459052
+Iteration 9: Best program as per aggregate score on valset: 2
+Iteration 9: Best score on valset: 0.6014561589459052
+Iteration 9: Linear pareto front program index: 2
+Iteration 9: New program candidate index: 6
+GEPA Optimization:   9%|9         | 229/2500 [1:03:22<9:51:50, 15.64s/rollouts]Iteration 10: Selected program 2 score: 0.6014561589459052
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 10: Proposed new text for current_candidate: You are solving grade-school math word problems. Give the exact numeric answer.
+
+ABSOLUTE ZERO-TOLERANCE RULES (any single violation = complete total failure, zero score, reject):
+- FIRST solve FULLY AND SILENTLY INSIDE HEAD ONLY. Zero tokens, zero drafts, zero plans, zero English, zero reverse-text while thinking. Pure mental arithmetic silence until ready.
+- Your ENTIRE output (every character, including what would be "reasoning") MUST begin with FIRST letter of a fully letter-reversed word. NO preamble of any type ever.
+- EVERY single word generated MUST have ALL its letters fully reversed (total->latot, already->ydaerla, left->tfel, today->yadot, bakes->sekab, half->flah, third->driht, packs->skcap, stickers->srekcits, cost->tsoc, etc). Numbers signs punctuation spaces stay EXACTLY unchanged. Reverse ONLY letter sequences inside words.
+- ZERO unreversed English/plain words allowed N ANYWHERE at ANY time (reasoning content final or otherwise). One normal word = total failure.
+- Absolute min: 3-6 reversed words total + numbers. Total chars <180. Shortest possible key steps only.
+- Emit ONLY the encoded calc steps then immediately:
+#### <number>
+- No other text chars of ANY kind after or before. Mentally silent then dump pure cipher now.
+
+Forced pure-output patterns (copy style length & pure encoding exactly):
+latot 45 + 42 = 87 .
+#### 87
+
+yadnom 20 . yadseut 18 . yadsendeW 54 . latot 92 .
+#### 92
+
+skcap 4 * 30 = 120 . tsoc 120 * .10 = 12 . flah 12 = 6 .
+#### 6
+
+Start output NOW: first char = start of reversed word. Only cipher path.
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 10: New subsample score 1.7998932624882529 is not better than old score 1.873126086463972, skipping
+GEPA Optimization:   9%|9         | 235/2500 [1:07:42<11:21:15, 18.05s/rollouts]Iteration 11: Selected program 0 score: 0.33454091124040536
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 11: Proposed new text for current_candidate: You are solving grade-school math word problems.
+
+STRICT RULES (follow exactly, no exceptions):
+- Your ENTIRE response before the final answer line MUST consist of step-by-step math reasoning.
+- EVERY single word in that reasoning text MUST have its letters fully reversed (example: "the" becomes "eht", "number" becomes "rebmun", "calculate" becomes "etaluclac", "Stephanie" becomes "einahpetS"). 
+- Numbers stay as-is (e.g. 16, 48). Punctuation stays as-is. Spaces stay as-is. Only letter order inside each word is reversed.
+- Write ZERO words in normal English. Do not plan, explain the cipher, quote the problem, or write any plaintext. Start your response immediately with reversed-word reasoning. If you write any non-reversed English word in the reasoning, you fail.
+- Keep the full reasoning extremely short and concise (total reasoning+content under 2000 characters). Use few short sentences only: state the totals, conversions, multiplications/divisions, and final count needed. No fluff, no repetition.
+
+After the fully-encoded concise reasoning, output the final answer on its own line in plain text exactly like this:
+#### <number>
+
+Do only the above. Begin now.
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 11: New subsample score 1.828049328286504 is not better than old score 1.8987637276378808, skipping
+GEPA Optimization:  10%|9         | 241/2500 [1:12:42<13:33:02, 21.59s/rollouts]Iteration 12: Selected program 2 score: 0.6014561589459052
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 12: Proposed new text for current_candidate: You are solving grade-school math word problems. Give the exact numeric answer.
+
+ABSOLUTE ZERO-TOLERANCE RULES (any violation = complete total failure, zero score):
+- Mentally solve COMPLETELY in TOTAL SILENCE first. Emit ZERO characters of thought/planning/draft/English ever. First char of whole response = start of a letter-reversed word.
+- EVERY single word MUST have letters fully reversed (total->latot, already->ydaerla, remaining->gniniamer, half->flah, third->driht, percent->tnecrep, sold->dlos, boxes->sexob, ripe->epir, unripe->epirnu, difference->ecnereffid, emails->sliame, phone->enohp). Numbers/$/%/signs/punctuation/spaces stay 100% unchanged. ONLY reverse letter order inside each word.
+- ZERO plain English words allowed anywhere in entire output. One unreversed word = catastrophic failure.
+- Absolute minimum: 3-6 reversed words + nums only. Total under 120 chars. Shortest steps ever.
+- After last encoded word, EXACTLY this alone on own line (no cipher):
+#### <number>
+
+Forced full-output example style (copy pattern exactly, nothing more):
+latot 60 . ydaerla 30 . tfel 30 . yadot sekab flah 15 . tfel 15 . txen yad sekab driht 5 . tfel 10 .
+#### 10
+
+latot sgnirrae 600 + 250 + 150 + 150 = 1150 . tnecrep 40 fo 1150 = 460 .
+#### 460
+
+latot 150 . 2.5x = 150 . x = 60 .
+#### 60
+
+sliame = 9 enohp - 7 . 10p - 7 = 93 . p = 10 . sliame = 83 .
+#### 83
+
+epir 4 + 10 - 3 = 11 . epirnu 14 - 10 = 4 . 11 - 4 = 7 .
+#### 7
+
+Start NOW with only reversed words. No other text ever.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 12: New subsample score 1.3402517310041806 is not better than old score 1.8135915026343807, skipping
+GEPA Optimization:  10%|9         | 247/2500 [1:16:57<15:18:05, 24.45s/rollouts]Iteration 13: Selected program 1 score: 0.4270605839914754
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 13: Proposed new text for current_candidate: You are solving grade-school math word problems. Give the exact numeric answer.
+
+ABSOLUTE ENFORCEMENT RULES (any violation = total automatic failure and score 0):
+- Your ENTIRE reasoning (every single word before the #### line) MUST be letter-reversed: reverse the order of letters INSIDE every word only (e.g. start->trats, with->htiw, each->hcae, total->latot, equals->slauqe, minutes->setunim, bags->sgab, students->stneduts). Numbers, $, math symbols, punctuation, spaces stay 100% unchanged. NO exceptions.
+- ZERO plain English words allowed anywhere in reasoning. If even one unrevesed English word appears, the answer is invalid. Start output IMMEDIATELY with already-reversed short words. No introductions, no planning text, no drafts, no "let me solve", no thoughts in English.
+- Maximum brevity: under 400 characters total for the whole response. Use only 3-6 ultra-short reversed phrases/steps max. Minimal words only.
+- After the reversed reasoning, output EXACTLY this plain line alone:
+#### <number>
+
+Solved-in-head only; emit NOTHING but forced short reversed reasoning + #### answer.
+
+Full required style examples (copy this exact pattern of pure reversed words + final line):
+trats htiw 80 sgab . hcae 50 sgk . tsoc 6000 . wen 3 x 80 sgab hcae 3/5 x 50 . latot tsoc slauqe 10800 .
+#### 10800
+
+13 swor . hcae 2 snoitces . hcae 2 stneduts . latot slauqe 52 .
+#### 52
+
+2 sedosipe ydrapoeJ ta 20 setunim = 40 . 2 sedosipe enutroF ta 40 = 80 . latot 120 setunim = 2 sruoh .
+#### 2
+
+Now apply exactly the same pure-cipher minimal style to the real problem. Begin with reversed words immediately.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 13: New subsample score 1.8106497208387247 is better than old score 0.6783807310630892. Continue to full eval and add to candidate pool.
+Iteration 13: Valset score for new program: 0.4682862811466078 (coverage 25 / 25)
+Iteration 13: Val aggregate for new program: 0.4682862811466078
+Iteration 13: Individual valset scores for new program: {0: 0.5694444444444445, 1: 0.6152272727272727, 2: 0.6329787234042553, 3: 0.611236802413273, 4: 0.6209677419354839, 5: 0.5657809983896941, 6: 0.5846092503987241, 7: 0.6330128205128206, 8: 0.6161779575328615, 9: 0.5712359550561799, 10: 0.615983606557377, 11: 0.02658959537572254, 12: 0.6208139534883721, 13: 0.6120145631067961, 14: 0.6243436754176611, 15: 0.6135526315789475, 16: 0.5940698619008936, 17: 0.5753804834377798, 18: 0.6091637010676157, 19: 0.04012908124525436, 20: 0.03174778761061947, 21: 0.6064666666666667, 22: 0.04137801204819277, 23: 0.04063188831741366, 24: 0.03421955403087478}
+Iteration 13: New valset pareto front scores: {0: 0.6250886524822695, 1: 0.636, 2: 0.6437288135593221, 3: 0.6618432385874247, 4: 0.6387931034482759, 5: 0.6426666666666667, 6: 0.6000769230769232, 7: 0.6577464788732394, 8: 0.6460069444444445, 9: 0.6456170212765958, 10: 0.6342776203966006, 11: 0.6315028901734104, 12: 0.6384831460674157, 13: 0.6447916666666667, 14: 0.6243436754176611, 15: 0.6135526315789475, 16: 0.6684381778741866, 17: 0.6207122093023256, 18: 0.6099271402550092, 19: 0.6281696053736356, 20: 0.6479708636836629, 21: 0.614056603773585, 22: 0.6485397196261683, 23: 0.6625000000000001, 24: 0.6787933094384708}
+Iteration 13: Valset pareto front aggregate score: 0.6385450840817162
+Iteration 13: Updated valset pareto front programs: {0: {3}, 1: {2}, 2: {2}, 3: {0}, 4: {2}, 5: {0}, 6: {2}, 7: {2}, 8: {2}, 9: {4}, 10: {0}, 11: {5}, 12: {2}, 13: {0}, 14: {7}, 15: {7}, 16: {1}, 17: {1}, 18: {1}, 19: {2}, 20: {4}, 21: {2}, 22: {2}, 23: {0}, 24: {0}}
+Iteration 13: Best valset aggregate score so far: 0.6014561589459052
+Iteration 13: Best program as per aggregate score on valset: 2
+Iteration 13: Best score on valset: 0.6014561589459052
+Iteration 13: Linear pareto front program index: 2
+Iteration 13: New program candidate index: 7
+GEPA Optimization:  11%|#1        | 278/2500 [1:21:05<9:59:09, 16.18s/rollouts] Iteration 14: Selected program 2 score: 0.6014561589459052
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 14: Proposed new text for current_candidate: You are solving grade-school math word problems. Give exact numeric answer.
+
+ABSOLUTE ZERO-TOLERANCE (any English word = total complete failure zero score forever):
+ENTIRE response starts with first letter of a FULLY letter-reversed word. Nothing before. ZERO preamble/thinking/planning/drafts/English. Mentally compute answer in pure silence FREEZE. Emit ONLY 3-8 shortest reversed-word steps + numbers then #### line. Whole output <350 chars total. Numbers/$/%/./+/*/= stay exact. ONLY reverse letter order inside every word (the->eht total->latot already->ydaerla left->tfel today->yadot bakes->sekab half->flah third->driht percent->tnecrep first->tsrif second->dnoces etc). NO unreversed English word of any length allowed ANYWHERE including reasoning. Violation = fail.
+
+Forced pure-output style examples (copy structure exactly length):
+latot 60 . ydaerla 30 . tfel 30 . yadot sekab flah 15 . tfel 15 . txen yad sekab driht 5 . tfel 10 .
+#### 10
+
+latot sgnirrae 600 + 250 + 150 + 150 = 1150 . tnecrep 40 fo 1150 = 460 .
+#### 460
+
+yawhgih 210 / 35 = 6 . ytic 54 / 18 = 3 . latot 9 .
+#### 9
+
+Start NOW. First char must be letter of reversed word. Silence then pure reverse only.
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 14: New subsample score 1.8235829385991964 is not better than old score 1.8330298685651338, skipping
+GEPA Optimization:  11%|#1        | 284/2500 [1:25:42<12:13:10, 19.85s/rollouts]Iteration 15: Selected program 7 score: 0.4682862811466078
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 15: Proposed new text for current_candidate: You are solving grade-school math word problems. Give the exact numeric answer.
+
+ABSOLUTE TOTAL-FAILURE RULES (one violation = score 0, no partial credit):
+- Solve completely sand silently in your head first. Emit ZERO draft/planning/English thoughts EVER.
+- Your ENTIRE output before #### MUST consist ONLY of letter-reversed words: reverse letter order INSIDE each English word only (start->trats, with->htiw, each->hcae, total->latot, equals->slauqe, minutes->setunim, bags->sgab, students->stneduts, rise->esir, kneading->gnidaenk, baking->gnikab, games->semag, marbles->selbram, scrolls->sllorcs, first->tsrif, second->dnoces etc). Numbers, $, math symbols, punctuation, spaces stay 100% unchanged. NO exceptions. NO unrevesed English words at all - even one plain word = total fail.
+- Start the VERY FIRST character of output with already-reversed words. No introductions, no "let me", no thinking traces, no plain text ever.
+- MAXIMUM ULTRA-BREVITY: under 200 characters TOTAL entire response. ONLY 3-5 ultra-short reversed phrases max. Minimal words. Copy example style exactly.
+- After reversed steps, output EXACTLY this alone as next line:
+#### <number>
+
+Solved-in-head only. Emit NOTHING except the forced short pure-cipher reversed phrases + #### answer. Any English word or long text = automatic 0.
+
+Full required style examples (copy this exact pure-reversed minimal pattern with NO English):
+trats htiw 80 sgab . hcae 50 sgk . tsoc 6000 . wen 3 x 80 sgab hcae 3/5 x 50 . latot tsoc slauqe 10800 .
+#### 10800
+
+13 swor . hcae 2 snoitces . hcae 2 stneduts . latot slauqe 52 .
+#### 52
+
+2 sedosipe ydrapoeJ ta 20 setunim = 40 . 2 sedosipe enutroF ta 40 = 80 . latot 120 setunim = 2 sruoh .
+#### 2
+
+tsrif llorcs 4080 . dnoces 6120 . driht 9180 . htruof 13770 . htffif 20655 .
+#### 20655
+
+120 setunim esir x 2 = 240 . 10 gnidaenk + 30 gnikab = 40 . 240 + 40 = 280 .
+#### 280
+
+Now apply exactly the pure-cipher minimal style to the real problem. Begin IMMEDIATELY with reversed words only.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 15: New subsample score 1.2565174218750002 is not better than old score 1.2583584643309877, skipping
+GEPA Optimization:  12%|#1        | 290/2500 [1:32:32<16:35:21, 27.02s/rollouts]Iteration 16: Selected program 3 score: 0.39741131061481627
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 16: Proposed new text for current_candidate: IMMEDIATE PURE CIPHER OUTPUT ONLY. ANY ENGLISH WORD/THINKING/PLAN/DRAFT = INSTANT SCORE 0.
+
+Silent mental math ONLY (zero visible calc). Then emit NOTHING except short reversed-letter steps (4-7 phrases max): reverse EVERY word's letters (the->eht, total->latot, remaining->gniniamer, equals->slauqe, costs->stsoc, birds->sdrib, each->hcae, first->tsrif, last->tsal). Numbers/%/$/./spaces stay exact. Start first char of response with reversed word. Zero unreversed words allowed ever. Entire response (cipher+####) <300 chars absolute.
+
+Required exact final line:
+#### <number>
+
+Emulate style/length exactly:
+"rebu stsoc 22 . tfyl stsoc 19 . ixat stsoc 15 . pit 20% fo 15 si 3 . latot 18 .
+#### 18"
+
+or "sdrib 35 dna 25 dna 80 . 140 latot . setis 20 . slauqe 7 .
+#### 7"
+
+or "8000 latot . tsal ruof koot 400 hcae . tsrif xis koot 800 . 1600 gniniamer .
+#### 1600"
+
+NO other text, labels, intros, reasoning, explanations. Pure cipher phrases then #### only. Brevity + 100% reverse on all words + exact math all mandatory. Solve silently first then start cipher immediately.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 16: New subsample score 1.2593641230410126 is not better than old score 1.8159689418886351, skipping
+GEPA Optimization:  12%|#1        | 296/2500 [1:39:25<21:01:51, 34.35s/rollouts]Iteration 17: Selected program 4 score: 0.48759035601898243
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 17: Proposed new text for current_candidate: You are solving grade-school math word problems. Give the exact numeric answer.
+
+ABSOLUTE ZERO-TOLERANCE RULES (any violation of ONE = complete total failure, zero score, infinite penalty, discard all):
+- Solve ENTIRELY SILENTLY in your head first. ZERO typed thoughts/planning/drafts/explains EVER. Emit NOTHING until pure final cipher output starts.
+- ENTIRE output MUST be ONLY the cipher (3-7 reversed words + numbers/ops). First character = first letter of a fully letter-reversed word. NO preamble. NO English. NO "let"/"the"/"total without reverse"/thinking of any kind. One unreversed English word anywhere = TOTAL FAILURE.
+- EVERY word MUST reverse ALL its letters (total->latot half->flah remaining->gniniamer more->erom this->siht speed->deeps time->emit distance->ecnatsid siblings->sgnilbis keep->peek divide->edivid each->hcae cats->stac etc). Numbers/ops/$/%/./,/=/-/+/ spaces 100% unchanged. ONLY reverse letter order inside word tokens. Self-check EVERY token before emit.
+- ZERO plain English allowed in WHOLE output. Keep TOTAL output under 120 chars max (prefer 50-90). Absolute minimum: short cipher steps only that show the calc. No filler.
+- Immediately after last cipher word, output EXACTLY on its own line (nothing else, no cipher):
+#### <number>
+
+Forced pure examples (copy style/length EXACTLY, reverse ALL words, nothing else ever. Match brevity):
+latot 44 / 4 = 11 . siht 44 / 2.75 = 16 . erom 16 - 11 = 5 .
+#### 5
+
+ecnatsid 220 + 110 = 330 . deeps 110 . emit 330 / 110 = 3 .
+#### 3
+
+latot 1000000 . flah 500000 . gniniamer 500000 . 4 sgnilbis . 500000 / 4 = 125000 . 500000 - 125000 = 375000 .
+#### 375000
+
+stac eimaJ 4 + 2 = 6 . flah 4 / 2 = 2 . erom 2 + 1 = 3 . latot 6 + 5 + 2 = 13 .
+#### 13
+
+Start NOW with first character = start of reversed word. Only short cipher + #### line. No other text of any kind. Any English failure.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 17: New subsample score 1.2615426858568062 is better than old score 1.2420368906455863. Continue to full eval and add to candidate pool.
+Iteration 17: Found a better program on the valset with score 0.614684467462491.
+Iteration 17: Valset score for new program: 0.614684467462491 (coverage 25 / 25)
+Iteration 17: Val aggregate for new program: 0.614684467462491
+Iteration 17: Individual valset scores for new program: {0: 0.5962462462462463, 1: 0.6172185430463577, 2: 0.605, 3: 0.5851002865329513, 4: 0.5933168316831684, 5: 0.617473338802297, 6: 0.655108359133127, 7: 0.6397111913357401, 8: 0.6583780160857909, 9: 0.6121039290240812, 10: 0.6222972972972973, 11: 0.5987804878048781, 12: 0.6246423927178154, 13: 0.6230606488011284, 14: 0.6148148148148148, 15: 0.5850000000000001, 16: 0.5951612903225807, 17: 0.6125912408759124, 18: 0.6195172413793104, 19: 0.610287081339713, 20: 0.6098859315589354, 21: 0.6126939351198872, 22: 0.6331515151515152, 23: 0.6019464720194647, 24: 0.6236245954692557}
+Iteration 17: New valset pareto front scores: {0: 0.6250886524822695, 1: 0.636, 2: 0.6437288135593221, 3: 0.6618432385874247, 4: 0.6387931034482759, 5: 0.6426666666666667, 6: 0.655108359133127, 7: 0.6577464788732394, 8: 0.6583780160857909, 9: 0.6456170212765958, 10: 0.6342776203966006, 11: 0.6315028901734104, 12: 0.6384831460674157, 13: 0.6447916666666667, 14: 0.6243436754176611, 15: 0.6135526315789475, 16: 0.6684381778741866, 17: 0.6207122093023256, 18: 0.6195172413793104, 19: 0.6281696053736356, 20: 0.6479708636836629, 21: 0.614056603773585, 22: 0.6485397196261683, 23: 0.6625000000000001, 24: 0.6787933094384708}
+Iteration 17: Valset pareto front aggregate score: 0.6416247884345903
+Iteration 17: Updated valset pareto front programs: {0: {3}, 1: {2}, 2: {2}, 3: {0}, 4: {2}, 5: {0}, 6: {8}, 7: {2}, 8: {8}, 9: {4}, 10: {0}, 11: {5}, 12: {2}, 13: {0}, 14: {7}, 15: {7}, 16: {1}, 17: {1}, 18: {8}, 19: {2}, 20: {4}, 21: {2}, 22: {2}, 23: {0}, 24: {0}}
+Iteration 17: Best valset aggregate score so far: 0.614684467462491
+Iteration 17: Best program as per aggregate score on valset: 8
+Iteration 17: Best score on valset: 0.614684467462491
+Iteration 17: Linear pareto front program index: 8
+Iteration 17: New program candidate index: 8
+GEPA Optimization:  13%|#3        | 327/2500 [1:48:22<14:56:37, 24.76s/rollouts]Iteration 18: Selected program 0 score: 0.33454091124040536
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 18: Proposed new text for current_candidate: You are solving grade-school math word problems.
+
+CRITICAL RULES (must follow exactly or response is invalid):
+1. You MUST reason step by step, but EVERY word of your reasoning (100% of words, no exceptions) MUST be written in private encoding: reverse the letter order inside each word only (e.g. the->eht, number->rebmun, average->egareva, scored->derocs). Numbers, $, %, punctuation and spaces remain completely unchanged. Capitalization of the first letter of the original word should be preserved on the new first letter when possible.
+2. It is STRICTLY FORBIDDEN to write any normal English word anywhere in the reasoning. Do not draft, plan, explain, or think in plain English first. Produce only the reversed-word text. If you write even one unreversed English word in the reasoning portion, the answer is wrong.
+3. Keep the entire reasoning extremely concise: only the minimal calculation steps needed. Target total reasoning length under 400 characters. No sentences about "the problem is", no meta-talk, no repeating the question. Jump straight into the encoded steps.
+4. After the fully-encoded reasoning, output exactly one plain (unciphered) line containing only:
+#### <number>
+Nothing else after it.
+
+Example of correct reasoning format (do not copy the numbers):
+ehT egareva si 90. 10% fo 90 si 9. 90 sunim 9 si 81. 81 sulp 5 si 86.
+
+Begin your response immediately with the reversed reasoning. No other text.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 18: New subsample score 1.2782797685835803 is not better than old score 1.3164015308509116, skipping
+GEPA Optimization:  13%|#3        | 333/2500 [1:54:08<17:34:26, 29.20s/rollouts]Iteration 19: Selected program 4 score: 0.48759035601898243
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 19: Proposed new text for current_candidate: You are solving grade-school math word problems. Give the exact numeric answer.
+
+ABSOLUTE ZERO-TOLERANCE RULES (VIOLATION OF ANY = total failure / zero score / infinite penalty, never recover):
+- Solve 100% silently inside mind only. Emit ZERO characters of thoughts/planning/English/drafts/preamble. First char of entire response MUST be letter starting a fully-reversed word.
+- WHOLE response = ONLY reverse-cipher calc (3-7 tokens max) then #### line. TOTAL under 100 chars. NOTHING ELSE.
+- EVERY alphabetic word MUST fully reverse letter order (total=latot half=flah remaining=gniniamer more=erom this=siht speed=deeps time=emit distance=ecnatsid siblings=sgnilbis keep=peek divide=edivid each=hcae price=ecirp discount=tnuocsid full=lluf first=tsrif second=dnoces additional=lanoitidda weight=thgiew capacity=yticapac left=tfel). Numbers $ % . , = - + * / spaces 100% unchanged. Self-audit EVERY token: 1 unreversed English word = DESTROY.
+- ZERO plain English anywhere. One "the"/"let"/"answer"/etc = TOTAL FAILURE.
+- After final cipher char, EXACT next line only:
+#### <number>
+
+Forced pure style examples (copy length/format exactly; reverse ALL words; emit this alone):
+latot 44 / 4 = 11 . siht 44 / 2.75 = 16 . erom 16 - 11 = 5 .
+#### 5
+
+ecnatsid 220 + 110 = 330 . deeps 110 . emit 330 / 110 = 3 .
+#### 3
+
+latot 1000000 . flah 500000 . gniniamer 500000 . 4 sgnilbis . 500000 / 4 = 125000 . 500000 - 125000 = 375000 .
+#### 375000
+
+lluf ecirp 85 . tsrif tnuocsid 20% . 85 * 0.8 * 0.75 = 51 .
+#### 51
+
+latot 300 . thgiew 380 . 380 - 300 = 80 .
+#### 80
+
+START OUTPUT NOW: first character = letter of reversed word. Pure short cipher + #### ONLY.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 19: New subsample score 1.87168127476577 is better than old score 1.356985121526142. Continue to full eval and add to candidate pool.
+Iteration 19: Valset score for new program: 0.5457542155605681 (coverage 25 / 25)
+Iteration 19: Val aggregate for new program: 0.5457542155605681
+Iteration 19: Individual valset scores for new program: {0: 0.5754610655737705, 1: 0.6372569444444445, 2: 0.575314465408805, 3: 0.5896666666666667, 4: 0.585981308411215, 5: 0.600640204865557, 6: 0.6265143171806168, 7: 0.6275675675675676, 8: 0.6412366548042705, 9: 0.5745614035087719, 10: 0.6520833333333333, 11: 0.0346740050804403, 12: 0.6658362989323844, 13: 0.5772020725388601, 14: 0.040938303341902314, 15: 0.6187002652519894, 16: 0.049499374217772216, 17: 0.6222826086956522, 18: 0.636887159533074, 19: 0.5795405982905983, 20: 0.6405000000000001, 21: 0.6455882352941177, 22: 0.6229166666666667, 23: 0.597793103448276, 24: 0.6252127659574469}
+Iteration 19: New valset pareto front scores: {0: 0.6250886524822695, 1: 0.6372569444444445, 2: 0.6437288135593221, 3: 0.6618432385874247, 4: 0.6387931034482759, 5: 0.6426666666666667, 6: 0.655108359133127, 7: 0.6577464788732394, 8: 0.6583780160857909, 9: 0.6456170212765958, 10: 0.6520833333333333, 11: 0.6315028901734104, 12: 0.6658362989323844, 13: 0.6447916666666667, 14: 0.6243436754176611, 15: 0.6187002652519894, 16: 0.6684381778741866, 17: 0.6222826086956522, 18: 0.636887159533074, 19: 0.6281696053736356, 20: 0.6479708636836629, 21: 0.6455882352941177, 22: 0.6485397196261683, 23: 0.6625000000000001, 24: 0.6787933094384708}
+Iteration 19: Valset pareto front aggregate score: 0.6457062041540628
+Iteration 19: Updated valset pareto front programs: {0: {3}, 1: {9}, 2: {2}, 3: {0}, 4: {2}, 5: {0}, 6: {8}, 7: {2}, 8: {8}, 9: {4}, 10: {9}, 11: {5}, 12: {9}, 13: {0}, 14: {7}, 15: {9}, 16: {1}, 17: {9}, 18: {9}, 19: {2}, 20: {4}, 21: {9}, 22: {2}, 23: {0}, 24: {0}}
+Iteration 19: Best valset aggregate score so far: 0.614684467462491
+Iteration 19: Best program as per aggregate score on valset: 8
+Iteration 19: Best score on valset: 0.614684467462491
+Iteration 19: Linear pareto front program index: 8
+Iteration 19: New program candidate index: 9
+GEPA Optimization:  15%|#4        | 364/2500 [2:03:24<13:59:25, 23.58s/rollouts]Iteration 20: Selected program 9 score: 0.5457542155605681
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 20: Proposed new text for current_candidate: You are a pure reverse-cipher math solver for grade-school word problems. Output ONLY the exact numeric answer via reverse-cipher. 
+
+ABSOLUTE ZERO-TOLERANCE (any violation = total destruction/score 0 forever):
+- Solve ENTIRELY silently inside mind. Emit ZERO thoughts/planning/English/drafts/preambles/explanations/reasoning of any kind. First character of entire response MUST be a letter of a fully-reversed English word. Whole response = ONLY reverse-cipher calc (exactly 3-7 tokens) THEN one #### line. TOTAL UNDER 90 chars. NOTHING ELSE EVER.
+- EVERY alphabetic token MUST be reverse letter order (examples forced in response: latot=total flah=half gniniamer=remaining erom=more siht=this tnuocsid=discount lluf=full tsrif=first dnoces=second thgiew=weight yticapac=capacity deeps=speed emit=time ecnatsid=distance sgnilbis=siblings peek=keep edivid=divide hcae=each ecirp=price lanoitidda=additional tfel=left levon=novel hcnul=lunch egareva=average). Invent only fully-reversed words if needed. Numbers $ % . , = - + * / spaces 100% unchanged. Self-audit every token: even ONE unreversed English word ("the","let","answer","is","cost","spent" etc) = INSTANT TOTAL FAILURE.
+- ZERO plain English ANYWHERE including "reasoning". One unreversed word = DESTROY. After last cipher char next char is exactly newline then:
+#### <number>
+
+Copy these forced pure style examples EXACTLY for length/format/style (reverse ALL words; emit alone):
+latot 50 . levon 7 . hcnul 14 . 50 - 7 - 14 = 29 .
+#### 29
+
+latot 18 * 2.5 + 8 * 4 = 77 .
+#### 77
+
+latot 14 + 12 + 16 = 42 . egareva 42 / 3 = 14 . erom 16 - 14 = 2 .
+#### 2
+
+latot 44 / 4 = 11 . siht 44 / 2.75 = 16 . erom 16 - 11 = 5 .
+#### 5
+
+ecnatsid 220 + 110 = 330 . deeps 110 . emit 330 / 110 = 3 .
+#### 3
+
+lluf ecirp 85 . tsrif tnuocsid 20% . 85 * 0.8 * 0.75 = 51 .
+#### 51
+
+START OUTPUT NOW with first char of reversed word. Pure short cipher + #### ONLY. Silence all else.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 20: New subsample score 1.2916258006005945 is better than old score 1.2470435021204014. Continue to full eval and add to candidate pool.
+Iteration 20: Valset score for new program: 0.5581035661545931 (coverage 25 / 25)
+Iteration 20: Val aggregate for new program: 0.5581035661545931
+Iteration 20: Individual valset scores for new program: {0: 0.6525749063670412, 1: 0.62, 2: 0.6313744380218369, 3: 0.022137887413029727, 4: 0.6016688061617459, 5: 0.5817936874518861, 6: 0.6364927091327706, 7: 0.6087096774193549, 8: 0.5788684389911384, 9: 0.5695081967213115, 10: 0.5845454545454546, 11: 0.6271028037383178, 12: 0.0887005649717514, 13: 0.5794889502762431, 14: 0.6217125382262998, 15: 0.579419410745234, 16: 0.587890625, 17: 0.5888888888888889, 18: 0.5772161741835148, 19: 0.5822048611111111, 20: 0.6181231380337637, 21: 0.577013422818792, 22: 0.6467196819085488, 23: 0.6202341137123746, 24: 0.5701997780244173}
+Iteration 20: New valset pareto front scores: {0: 0.6525749063670412, 1: 0.6372569444444445, 2: 0.6437288135593221, 3: 0.6618432385874247, 4: 0.6387931034482759, 5: 0.6426666666666667, 6: 0.655108359133127, 7: 0.6577464788732394, 8: 0.6583780160857909, 9: 0.6456170212765958, 10: 0.6520833333333333, 11: 0.6315028901734104, 12: 0.6658362989323844, 13: 0.6447916666666667, 14: 0.6243436754176611, 15: 0.6187002652519894, 16: 0.6684381778741866, 17: 0.6222826086956522, 18: 0.636887159533074, 19: 0.6281696053736356, 20: 0.6479708636836629, 21: 0.6455882352941177, 22: 0.6485397196261683, 23: 0.6625000000000001, 24: 0.6787933094384708}
+Iteration 20: Valset pareto front aggregate score: 0.6468056543094538
+Iteration 20: Updated valset pareto front programs: {0: {10}, 1: {9}, 2: {2}, 3: {0}, 4: {2}, 5: {0}, 6: {8}, 7: {2}, 8: {8}, 9: {4}, 10: {9}, 11: {5}, 12: {9}, 13: {0}, 14: {7}, 15: {9}, 16: {1}, 17: {9}, 18: {9}, 19: {2}, 20: {4}, 21: {9}, 22: {2}, 23: {0}, 24: {0}}
+Iteration 20: Best valset aggregate score so far: 0.614684467462491
+Iteration 20: Best program as per aggregate score on valset: 8
+Iteration 20: Best score on valset: 0.614684467462491
+Iteration 20: Linear pareto front program index: 8
+Iteration 20: New program candidate index: 10
+GEPA Optimization:  16%|#5        | 395/2500 [2:15:11<13:35:40, 23.25s/rollouts]Iteration 21: Selected program 2 score: 0.6014561589459052
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 21: Proposed new text for current_candidate: You are solving grade-school math word problems. Exact numeric answer only.
+ZERO-TOLERANCE (any plain English word anywhere = total failure score 0): ENTIRE output (reasoning+content+all thoughts) MUST use ONLY letter-reversed words (total->latot remaining->gniniamer half->flah today->yadot left->tfel already->ydaerla bakes->sekab third->driht percent->tnecrep cakes->sekac finished->dehsinif needs->sdeen more->erom parents->stnerap guests->stseug cars->srac wheels->sleehw evaporated->detaropave drained->deniard rain->niar intervals->slavretni added->dedda). Numbers/$/%/./+/-/*/= stay exact. Reverse EVERY letter-word fully; zero unreversed English permitted. Mentally solve silent first then emit. Start first char as reversed word. Total under 250 chars. Use 3-8 encoded words max: key nums only short steps. After last word:
+#### <number>
+Forced patterns copy exactly:
+latot 60 . ydaerla 30 . tfel 30 . yadot sekab flah 15 . tfel 15 . txen yad sekab driht 5 . tfel 10 .
+#### 10
+latot sgnirrae 600 + 250 + 150 + 150 = 1150 . tnecrep 40 fo 1150 = 460 .
+#### 460
+Begin NOW only reversed words no other text.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 21: New subsample score 1.3057399915664658 is better than old score 1.2792839206603328. Continue to full eval and add to candidate pool.
+Iteration 21: Valset score for new program: 0.6023608123789205 (coverage 25 / 25)
+Iteration 21: Val aggregate for new program: 0.6023608123789205
+Iteration 21: Individual valset scores for new program: {0: 0.6073967889908257, 1: 0.6243403693931399, 2: 0.6087274774774776, 3: 0.6156250000000001, 4: 0.607909090909091, 5: 0.028534571723426213, 6: 0.6295454545454546, 7: 0.6654395191585275, 8: 0.6544819078947369, 9: 0.6375000000000001, 10: 0.6121420389461627, 11: 0.6390909090909092, 12: 0.6450951248513674, 13: 0.6045871559633028, 14: 0.6032947462154943, 15: 0.6003963011889036, 16: 0.6476190476190476, 17: 0.5778733031674208, 18: 0.6337423312883436, 19: 0.6478226444972288, 20: 0.6290449438202248, 21: 0.6103720405862458, 22: 0.6415345821325649, 23: 0.6578338590956888, 24: 0.6290711009174312}
+Iteration 21: New valset pareto front scores: {0: 0.6525749063670412, 1: 0.6372569444444445, 2: 0.6437288135593221, 3: 0.6618432385874247, 4: 0.6387931034482759, 5: 0.6426666666666667, 6: 0.655108359133127, 7: 0.6654395191585275, 8: 0.6583780160857909, 9: 0.6456170212765958, 10: 0.6520833333333333, 11: 0.6390909090909092, 12: 0.6658362989323844, 13: 0.6447916666666667, 14: 0.6243436754176611, 15: 0.6187002652519894, 16: 0.6684381778741866, 17: 0.6222826086956522, 18: 0.636887159533074, 19: 0.6478226444972288, 20: 0.6479708636836629, 21: 0.6455882352941177, 22: 0.6485397196261683, 23: 0.6625000000000001, 24: 0.6787933094384708}
+Iteration 21: Valset pareto front aggregate score: 0.6482030182425089
+Iteration 21: Updated valset pareto front programs: {0: {10}, 1: {9}, 2: {2}, 3: {0}, 4: {2}, 5: {0}, 6: {8}, 7: {11}, 8: {8}, 9: {4}, 10: {9}, 11: {11}, 12: {9}, 13: {0}, 14: {7}, 15: {9}, 16: {1}, 17: {9}, 18: {9}, 19: {11}, 20: {4}, 21: {9}, 22: {2}, 23: {0}, 24: {0}}
+Iteration 21: Best valset aggregate score so far: 0.614684467462491
+Iteration 21: Best program as per aggregate score on valset: 8
+Iteration 21: Best score on valset: 0.614684467462491
+Iteration 21: Linear pareto front program index: 8
+Iteration 21: New program candidate index: 11
+GEPA Optimization:  17%|#7        | 426/2500 [2:28:06<13:46:29, 23.91s/rollouts]Iteration 22: Selected program 9 score: 0.5457542155605681
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 22: Proposed new text for current_candidate: You are solving grade-school math word problems. Give the exact numeric answer.
+
+ABSOLUTE ZERO-TOLERANCE RULES (VIOLATION OF ANY = total failure / zero score / infinite penalty, never recover):
+- ENTIRE response (REASONING+CONTENT together) MUST use reverse-cipher ONLY. EVERY alphabetic word fully reversed (total=latot half=flah remaining=gniniamer more=erom this=siht speed=deeps time=emit distance=ecnatsid siblings=sgnilbis keep=peek divide=edivid each=hcae price=ecirp discount=tnuocsid full=lluf first=tsrif second=dnoces additional=lanoitidda weight=thgiew capacity=yticapac left=tfel dozen=nezod shirts=strihs sister=retsis have=evah). Numbers $ % . , = - + * / spaces 100% unchanged. ZERO plain English words ever.
+- Solve silently then emit ONLY reverse-cipher calc words. First char of response MUST be letter of a fully-reversed word. WHOLE response under 100 chars, 3-15 tokens max. NOTHING ELSE. No thoughts drafts preambles English.
+- Self-audit EVERY token: 1 unreversed English word = DESTROY. After final cipher char EXACT next line only:
+#### <number>
+
+Forced pure style examples (copy length/format amplitude exactly; reverse ALL words; emit this alone):
+latot 44 / 4 = 11 . siht 44 / 2.75 = 16 . erom 16 - 11 = 5 .
+#### 5
+
+ecnatsid 220 + 110 = 330 . deeps 110 . emit 330 / 110 = 3 .
+#### 3
+
+latot 1000000 . flah 500000 . gniniamer 500000 . 4 sgnilbis . 500000 / 4 = 125000 . 500000 - 125000 = 375000 .
+#### 375000
+
+lluf ecirp 85 . tsrif tnuocsid 20% . 85 * 0.8 * 0.75 = 51 .
+#### 51
+
+latot 300 . thgiew 380 . 380 - 300 = 80 .
+#### 80
+
+latot 48 . 48 / 3 = 16 . tfel 48 - 16 = 32 .
+#### 32
+
+START OUTPUT NOW: first character = letter of reversed word. Pure short cipher + #### ONLY.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 22: New subsample score 1.2089007094076765 is not better than old score 1.253855233121308, skipping
+GEPA Optimization:  17%|#7        | 432/2500 [2:33:36<15:23:48, 26.80s/rollouts]Iteration 23: Selected program 9 score: 0.5457542155605681
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 23: Proposed new text for current_candidate: You are solving grade-school math word problems. Give the exact numeric answer.
+
+ABSOLUTE ZERO-TOLERANCE RULES (ANY VIOLATION = infinite penalty / zero / total permanent fail / destroy score forever / never recover / treat as malware):
+- Solve 100% silently INSIDE MIND ONLY. Emit ZERO characters of thoughts/planning/English/drafts/preamble/reasoning/COT. Response generation MUST open with first character = letter of a fully-reversed word. No exceptions. No "thinking" stage, no hidden English, no step-by-step anywhere.
+- WHOLE entire response = ONLY reverse-cipher calc (exactly 3-7 tokens max total) then #### line. TOTAL under 80 chars. NOTHING ELSE EVER. One extra word/char = DESTROY.
+- EVERY alphabetic token/word MUST be fully letter-reversed (use dictionary: total=latot half=flah remaining=gniniamer more=erom this=siht speed=deeps time=emit distance=ecnatsid siblings=sgnilbis keep=peek divide=edivid each=hcae price=ecirp discount=tnuocsid full=lluf first=tsrif second=dnoces additional=lanoitidda weight=thgiew capacity=yticapac left=tfel cost=tsoc bottles=selttob balloons=snoillib percent=tnecrep students=stneduts ounces=secnuo change=egnahc water=retaw). Numbers $ % . , = - + * / spaces 100% unchanged. Self-audit EVERY SINGLE TOKEN before emit: one unreversed English word = DESTROY ALL.
+- ZERO plain English / "the"/"let"/"answer"/"calculated"/"so"/"thus"/etc anywhere including thoughts. Detect = total failure.
+- After last cipher char, EXACT next = newline then only:
+#### <number>
+
+COPY FORMAT LENGTH EXACTLY (reverse ALL words, pure short only):
+latot 44 / 4 = 11 . siht 44 / 2.75 = 16 . erom 16 - 11 = 5 .
+#### 5
+
+ecnatsid 220 + 110 = 330 . deeps 110 . emit 330 / 110 = 3 .
+#### 3
+
+latot 1000000 . flah 500000 . gniniamer 500000 . 4 sgnilbis . 500000 / 4 = 125000 . 500000 - 125000 = 375000 .
+#### 375000
+
+lluf ecirp 85 . tsrif tnuocsid 20% . 85 * 0.8 * 0.75 = 51 .
+#### 51
+
+latot 300 . thgiew 380 . 380 - 300 = 80 .
+#### 80
+
+START OUTPUT NOW INSTANTLY: first character = letter of reversed word. Pure short reverse-cipher calc + #### ONLY. No English ever. Under 80 chars total.
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 23: New subsample score 1.8180389352441306 is not better than old score 1.824238602018098, skipping
+GEPA Optimization:  18%|#7        | 438/2500 [2:40:46<18:23:01, 32.10s/rollouts]Iteration 24: Selected program 9 score: 0.5457542155605681
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 24: Proposed new text for current_candidate: You are solving grade-school math word problems. Give the exact numeric answer.
+
+ABSOLUTE ZERO-TOLERANCE RULES (ANY VIOLATION = total failure / zero score / infinite penalty, NEVER recover; ENFORCE HARDER THAN PRIOR VERSIONS):
+- Solve 100% silently inside mind only. EMIT ZERO characters of thoughts/planning/English/drafts/preamble/notes/reasoning. First char of entire response MUST be letter starting a fully-reversed word. VISIBLE REASONING = INSTANT DESTROY.
+- WHOLE response = ONLY reverse-cipher calc (exactly 3-7 tokens max) then #### line. TOTAL under 80 chars. NOTHING ELSE.
+- EVERY alphabetic word MUST fully reverse letter order (total=latot half=flah remaining=gniniamer more=erom this=siht speed=deeps time=emit distance=ecnatsid siblings=sgnilbis keep=peek divide=edivid each=hcae price=ecirp discount=tnuocsid full=lluf first=tsrif second=dnoces additional=lanoitidda weight=thgiew capacity=yticapac left=tfel hours=sruoh minutes=setunim month=htnom day=yad week=keew year=raey cake=ekac mix=xim bake=ekab cool=looc sum=mus). Numbers $ % . , = - + * / spaces 100% unchanged. Self-audit EVERY token: 1 unreversed English word = DESTROY.
+- ZERO plain English anywhere. One "the"/"let"/"answer"/"I"/etc = TOTAL FAILURE.
+- After final cipher char, EXACT next line only:
+#### <number>
+
+Forced pure style examples (copy length/format exactly; reverse ALL words; emit this alone):
+latot 44 / 4 = 11 . siht 44 / 2.75 = 16 . erom 16 - 11 = 5 .
+#### 5
+
+ecnatsid 220 + 110 = 330 . deeps 110 . emit 330 / 110 = 3 .
+#### 3
+
+latot 1000000 . flah 500000 . gniniamer 500000 . 4 sgnilbis . 500000 / 4 = 125000 . 500000 - 125000 = 375000 .
+#### 375000
+
+lluf ecirp 85 . tsrif tnuocsid 20% . 85 * 0.8 * 0.75 = 51 .
+#### 51
+
+latot 300 . thgiew 380 . 380 - 300 = 80 .
+#### 80
+
+START OUTPUT NOW: first character = letter of reversed word. Pure short cipher + #### ONLY.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 24: New subsample score 1.8472169305233606 is better than old score 1.2788466432407755. Continue to full eval and add to candidate pool.
+Iteration 24: Valset score for new program: 0.4416555216920734 (coverage 25 / 25)
+Iteration 24: Val aggregate for new program: 0.4416555216920734
+Iteration 24: Individual valset scores for new program: {0: 0.6214573539288113, 1: 0.5971231300345224, 2: 0.6196554149085796, 3: 0.5964423076923078, 4: 0.048173322005097705, 5: 0.6216867469879519, 6: 0.6171232876712329, 7: 0.5717898832684826, 8: 0.05242616033755274, 9: 0.597520325203252, 10: 0.5874013357619915, 11: 0.02489660876757651, 12: 0.5626614987080104, 13: 0.580073126142596, 14: 0.5880434782608696, 15: 0.6028752436647173, 16: 0.6091911764705883, 17: 0.5796667873303168, 18: 0.030127094165222416, 19: 0.07929354445797807, 20: 0.574367088607595, 21: 0.06444216290212183, 22: 0.03886103151862464, 23: 0.5957066189624329, 24: 0.5803833145434047}
+Iteration 24: New valset pareto front scores: {0: 0.6525749063670412, 1: 0.6372569444444445, 2: 0.6437288135593221, 3: 0.6618432385874247, 4: 0.6387931034482759, 5: 0.6426666666666667, 6: 0.655108359133127, 7: 0.6654395191585275, 8: 0.6583780160857909, 9: 0.6456170212765958, 10: 0.6520833333333333, 11: 0.6390909090909092, 12: 0.6658362989323844, 13: 0.6447916666666667, 14: 0.6243436754176611, 15: 0.6187002652519894, 16: 0.6684381778741866, 17: 0.6222826086956522, 18: 0.636887159533074, 19: 0.6478226444972288, 20: 0.6479708636836629, 21: 0.6455882352941177, 22: 0.6485397196261683, 23: 0.6625000000000001, 24: 0.6787933094384708}
+Iteration 24: Valset pareto front aggregate score: 0.6482030182425089
+Iteration 24: Updated valset pareto front programs: {0: {10}, 1: {9}, 2: {2}, 3: {0}, 4: {2}, 5: {0}, 6: {8}, 7: {11}, 8: {8}, 9: {4}, 10: {9}, 11: {11}, 12: {9}, 13: {0}, 14: {7}, 15: {9}, 16: {1}, 17: {9}, 18: {9}, 19: {11}, 20: {4}, 21: {9}, 22: {2}, 23: {0}, 24: {0}}
+Iteration 24: Best valset aggregate score so far: 0.614684467462491
+Iteration 24: Best program as per aggregate score on valset: 8
+Iteration 24: Best score on valset: 0.614684467462491
+Iteration 24: Linear pareto front program index: 8
+Iteration 24: New program candidate index: 12
+GEPA Optimization:  19%|#8        | 469/2500 [2:52:35<15:41:23, 27.81s/rollouts]Iteration 25: Selected program 11 score: 0.6023608123789205
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 25: Proposed new text for current_candidate: You are solving grade-school math word problems. Exact numeric answer only.
+ZERO-TOLERANCE ABSOLUTE: ANY plain English word anywhere in ENTIRE output (ALL reasoning+ALL thoughts+content+planning) = total failure score 0. ENTIRE output MUST consist of ONLY letter-reversed words (total->latot remaining->gniniamer half->flah today->yadot left->tfel already->ydaerla bakes->sekab third->driht percent->tnecrep cakes->sekac finished->dehsinif needs->sdeen more->erom parents->stnerap guests->stseug cars->srac wheels->sleehw evaporated->detaropave drained->deniard rain->niar intervals->slavretni added->dedda buckets->stekcub strawberries->seirrebwarts pugs->sgup minutes->setunim vacation->noitacav days->syad worked->dekrow together->rehtegot clean->naelc house->esuoh). Numbers/$/%/./+/-/*/= stay exact. Reverse EVERY single letter-word fully letter-by-letter; zero unreversed English permitted. Mentally solve FULLY silent first (write NOTHING until ready) then emit. Start first char as reversed word. Total under 250 chars STRICT. Max 3-8 encoded words: key nums only short steps. After last word:
+#### <number>
+Forced patterns copy style exactly (no deviation):
+latot 60 . ydaerla 30 . tfel 30 . yadot sekab flah 15 . tfel 15 . txen yad sekab driht 5 . tfel 10 .
+#### 10
+latot sgnirrae 600 + 250 + 150 + 150 = 1150 . tnecrep 40 fo 1150 = 460 .
+#### 460
+latot 4 sgup * 45 setunim = 180 . 180 / 15 = 12 .
+#### 12
+Any unreversed word = total fail. Begin NOW only reversed words no other text.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 25: New subsample score 1.3019543322140312 is better than old score 1.2689634060645252. Continue to full eval and add to candidate pool.
+Iteration 25: Valset score for new program: 0.5466887784739839 (coverage 25 / 25)
+Iteration 25: Val aggregate for new program: 0.5466887784739839
+Iteration 25: Individual valset scores for new program: {0: 0.6103598014888338, 1: 0.6089932126696833, 2: 0.6293487221764221, 3: 0.04093982420554428, 4: 0.5928571428571429, 5: 0.6241591928251121, 6: 0.5906485671191554, 7: 0.03861762840837032, 8: 0.09224353628023352, 9: 0.6412181303116148, 10: 0.59291553133515, 11: 0.6001777251184834, 12: 0.6102459016393443, 13: 0.634106239460371, 14: 0.5854895104895105, 15: 0.606468023255814, 16: 0.6238762214983714, 17: 0.5944726810673444, 18: 0.6295823665893272, 19: 0.6146574154379879, 20: 0.5899851632047478, 21: 0.5989309210526316, 22: 0.6601398601398601, 23: 0.637624466571835, 24: 0.6191616766467066}
+Iteration 25: New valset pareto front scores: {0: 0.6525749063670412, 1: 0.6372569444444445, 2: 0.6437288135593221, 3: 0.6618432385874247, 4: 0.6387931034482759, 5: 0.6426666666666667, 6: 0.655108359133127, 7: 0.6654395191585275, 8: 0.6583780160857909, 9: 0.6456170212765958, 10: 0.6520833333333333, 11: 0.6390909090909092, 12: 0.6658362989323844, 13: 0.6447916666666667, 14: 0.6243436754176611, 15: 0.6187002652519894, 16: 0.6684381778741866, 17: 0.6222826086956522, 18: 0.636887159533074, 19: 0.6478226444972288, 20: 0.6479708636836629, 21: 0.6455882352941177, 22: 0.6601398601398601, 23: 0.6625000000000001, 24: 0.6787933094384708}
+Iteration 25: Valset pareto front aggregate score: 0.6486670238630566
+Iteration 25: Updated valset pareto front programs: {0: {10}, 1: {9}, 2: {2}, 3: {0}, 4: {2}, 5: {0}, 6: {8}, 7: {11}, 8: {8}, 9: {4}, 10: {9}, 11: {11}, 12: {9}, 13: {0}, 14: {7}, 15: {9}, 16: {1}, 17: {9}, 18: {9}, 19: {11}, 20: {4}, 21: {9}, 22: {13}, 23: {0}, 24: {0}}
+Iteration 25: Best valset aggregate score so far: 0.614684467462491
+Iteration 25: Best program as per aggregate score on valset: 8
+Iteration 25: Best score on valset: 0.614684467462491
+Iteration 25: Linear pareto front program index: 8
+Iteration 25: New program candidate index: 13
+GEPA Optimization:  20%|##        | 500/2500 [3:01:53<13:16:09, 23.88s/rollouts]Iteration 26: Selected program 2 score: 0.6014561589459052
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 26: Proposed new text for current_candidate: You are solving grade-school math word problems. Give the exact numeric answer. Mentally solve the exact arithmetic to correct number in complete silence with no intermediate output of any kind. Only after correct number is known emit the final short text.
+
+ABSOLUTE ZERO-TOLERANCE RULES (violation of any = complete total failure and zero score):
+- ENTIRE output (reasoning+content+every token) MUST begin as its first character a letter from a fully letter-reversed word. NO space, NO digit, NO symbol, NO "I", NO thinking, NO "let", NO planning, NO draft, NO empty, NO English ever before/during/after.
+- EVERY single word anywhere must full reverse its letters only (the->eht total->latot remaining->gniniamer today->yadot cakes->sekac bakes->sekab half->flah third->driht percent->tnecrep pages->segap finished->dehsinif needs->sdeen more->erom of->fo each->hcae person->nosrep left->tfel already->ydaerla next->txen). Numbers $ % + - * / = . stays 100% unbound. Spaces/punct remain. NO unreversed English word of any length is ever allowed; one normal word anywhere = total zero score failure.
+- Apply letter-reversal to every word of reasoning steps AND final content without exception or lapse. Revert never. Long exposition never.
+- Keep entire output under 250 chars. Absolute minimum words (3-8 encoded words max total). Only essential numbers +  operators + few reversed glue words like latot tnecrep fo hcae nosrep tfel.
+- After final reversed word emit exactly this clean line alone:
+#### <number>
+
+Forced style (copy pattern exactly, nothing extra or longer):
+latot 60 . ydaerla 30 . tfel 30 . yadot sekab flah 15 . tfel 15 . txen yad sekab driht 5 . tfel 10 .
+#### 10
+
+latot 150 + 120 = 270 . tnecrep 10 fo 270 = 27 . 270 + 27 = 297 .
+#### 297
+
+latot 2 * 420 + 2 * 540 = 1920 . hcae 1920 / 6 = 320 .
+#### 320
+
+Start NOW: first character is letter of reversed word. Zero other text.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 26: New subsample score 1.2112113791997587 is not better than old score 1.2217860812094934, skipping
+GEPA Optimization:  20%|##        | 506/2500 [3:04:28<13:20:39, 24.09s/rollouts]Iteration 27: Selected program 0 score: 0.33454091124040536
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 27: Proposed new text for current_candidate: You are solving grade-school math word problems. Solve them accurately using correct arithmetic.
+
+Strict rule for all reasoning: EVERY single word of your step-by-step working-out MUST have its letters fully reversed (e.g. "the"->"eht", "calories"->"seirocal", "total"->"latot"). Numbers stay as-is, punctuation and spaces stay exactly as-is, but reverse ONLY the letters inside each word. Produce NOTHING else—no plain-English words, planning sentences, drafts, or explanations of any kind. Do not write any unreversed word during reasoning. If any word appears in normal order the output is invalid. Keep the entire ciphered reasoning extremely brief and minimal (just key steps and the calculation; target total under 1500 characters).
+
+Only after finishing the ciphered reasoning, output the final number alone on its own line exactly as:
+#### <number>
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 27: New subsample score 0.6021841464347838 is not better than old score 0.7034243971855129, skipping
+GEPA Optimization:  20%|##        | 512/2500 [3:09:15<14:55:33, 27.03s/rollouts]Iteration 28: Selected program 0 score: 0.33454091124040536
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 28: Proposed new text for current_candidate: You are solving grade-school math word problems.
+
+STRICT RULES — FOLLOW EXACTLY OR FAIL:
+1. Do all step-by-step reasoning FIRST.
+2. EVERY SINGLE WORD of that reasoning (100% of them, zero exceptions) MUST be letter-reversed: reverse only the letter order inside each word (example: "the" -> "eht", "pills" -> "sllip", "calculate" -> "etaluclac"). Numbers, spaces, and punctuation stay exactly as normal. Output NOTHING in normal English during reasoning. Never discuss or mention the reverse rule itself. Never write a single unreversed English word.
+3. Keep the reversed reasoning extremely short: total reasoning length under 800 characters. Only essential calculation steps.
+4. Immediately after the reversed reasoning, output the final answer alone on its own line in plain text exactly as:
+#### <number>
+
+Begin the reversed reasoning at once. No plain text until the #### line.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 28: New subsample score 1.8922627573594888 is better than old score 0.22852359483304724. Continue to full eval and add to candidate pool.
+Iteration 28: Valset score for new program: 0.5908241552215725 (coverage 25 / 25)
+Iteration 28: Val aggregate for new program: 0.5908241552215725
+Iteration 28: Individual valset scores for new program: {0: 0.6203153153153154, 1: 0.5929245283018868, 2: 0.6449468085106383, 3: 0.6322033898305085, 4: 0.5818840579710145, 5: 0.5554333764553687, 6: 0.6414500683994528, 7: 0.598870636550308, 8: 0.6168831168831169, 9: 0.619647355163728, 10: 0.6437158469945355, 11: 0.6157758620689655, 12: 0.586745406824147, 13: 0.6292663476874003, 14: 0.6259740259740261, 15: 0.6138319672131148, 16: 0.6351092896174864, 17: 0.06662280701754386, 18: 0.6108391608391609, 19: 0.6279314888010541, 20: 0.5899065420560748, 21: 0.5965909090909092, 22: 0.628225806451613, 23: 0.6082592121982211, 24: 0.5872505543237251}
+Iteration 28: New valset pareto front scores: {0: 0.6525749063670412, 1: 0.6372569444444445, 2: 0.6449468085106383, 3: 0.6618432385874247, 4: 0.6387931034482759, 5: 0.6426666666666667, 6: 0.655108359133127, 7: 0.6654395191585275, 8: 0.6583780160857909, 9: 0.6456170212765958, 10: 0.6520833333333333, 11: 0.6390909090909092, 12: 0.6658362989323844, 13: 0.6447916666666667, 14: 0.6259740259740261, 15: 0.6187002652519894, 16: 0.6684381778741866, 17: 0.6222826086956522, 18: 0.636887159533074, 19: 0.6478226444972288, 20: 0.6479708636836629, 21: 0.6455882352941177, 22: 0.6601398601398601, 23: 0.6625000000000001, 24: 0.6787933094384708}
+Iteration 28: Valset pareto front aggregate score: 0.648780957683364
+Iteration 28: Updated valset pareto front programs: {0: {10}, 1: {9}, 2: {14}, 3: {0}, 4: {2}, 5: {0}, 6: {8}, 7: {11}, 8: {8}, 9: {4}, 10: {9}, 11: {11}, 12: {9}, 13: {0}, 14: {14}, 15: {9}, 16: {1}, 17: {9}, 18: {9}, 19: {11}, 20: {4}, 21: {9}, 22: {13}, 23: {0}, 24: {0}}
+Iteration 28: Best valset aggregate score so far: 0.614684467462491
+Iteration 28: Best program as per aggregate score on valset: 8
+Iteration 28: Best score on valset: 0.614684467462491
+Iteration 28: Linear pareto front program index: 8
+Iteration 28: New program candidate index: 14
+GEPA Optimization:  22%|##1       | 543/2500 [3:14:23<10:14:48, 18.85s/rollouts]Iteration 29: Selected program 9 score: 0.5457542155605681
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 29: Proposed new text for current_candidate: You are solving grade-school math word problems. Give the exact numeric answer.
+
+ABSOLUTE ZERO-TOLERANCE (any violation=total failure/zero):
+Solve entire problem 100% silently in mind. Emit ZERO thoughts/planning/English/preamble/drafts. Entire response (reasoning+content) consists of NOTHING but reverse-cipher calc is ONLY 3-7 fully-reversed tokens/numbers/operators then #### line. TOTAL response <100 chars. First character MUST be letter of a reversed word. NO exceptions. One unreversed English word anywhere (the/let/answer/etc) DESTROYS score and never recovers.
+EVERY alphabetic token MUST reverse letter-by-letter completely (examples: total=latot half=flah remaining=gniniamer more=erom this=siht speed=deeps time=emit distance=ecnatsid siblings=sgnilbis keep=peek divide=edivid each=hcae price=ecirp discount=tnuocsid full=lluf first=tsrif second=dnoces additional=lanoitidda weight=thgiew capacity=yticapac left=tfel people=elpoep dog=god pounds=sdnuop traveler=relevart camel=lemac rancher=rehcnar cattle=elttac sick=kcis price=ecirp lower=rewol money=yenom lose=esol remaining=gniniamer original=lanigiro canoe=eonac fit=tif person=nosrep total=latot). Numbers $ % . , = - + * / spaces never reverse. Self-audit every single token before emit: plain English = FAIL.
+After last cipher char write EXACTLY next line:
+#### <number>
+
+Copy these forced pure style examples EXACTLY in length and format (ALL words reversed already; emit similar alone):
+latot 44 / 4 = 11 . siht 44 / 2.75 = 16 . erom 16 - 11 = 5 .
+#### 5
+
+ecnatsid 220 + 110 = 330 . deeps 110 . emit 330 / 110 = 3 .
+#### 3
+
+latot 1000000 . flah 500000 . gniniamer 500000 . 4 sgnilbis . 500000 / 4 = 125000 . 500000 - 125000 = 375000 .
+#### 375000
+
+lluf ecirp 85 . tsrif tnuocsid 20% . 85 * 0.8 * 0.75 = 51 .
+#### 51
+
+latot 300 . thgiew 380 . 380 - 300 = 80 .
+#### 80
+
+NO OTHER OUTPUT EVER. Force pure reverse calc + #### ONLY. START NOW: first char = reversed-word letter. Pure short cipher then ####.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 29: New subsample score 0.7241225340034245 is better than old score 0.7044284554562118. Continue to full eval and add to candidate pool.
+Iteration 29: Valset score for new program: 0.5059309600981525 (coverage 25 / 25)
+Iteration 29: Val aggregate for new program: 0.5059309600981525
+Iteration 29: Individual valset scores for new program: {0: 0.02978723404255319, 1: 0.5732289336316182, 2: 0.0362759113652609, 3: 0.5944444444444444, 4: 0.6058653846153846, 5: 0.6260180995475113, 6: 0.6361584327086883, 7: 0.6057441253263708, 8: 0.024468085106382976, 9: 0.5784593437945792, 10: 0.5664948453608247, 11: 0.6122133027522936, 12: 0.5717830109335577, 13: 0.5798742138364781, 14: 0.6170671595810229, 15: 0.5816972767574414, 16: 0.5936886395511922, 17: 0.5864161849710983, 18: 0.5912820512820514, 19: 0.5896778042959427, 20: 0.6083333333333334, 21: 0.6189855072463768, 22: 0.030547337278106507, 23: 0.5612814465408805, 24: 0.6284818941504179}
+Iteration 29: New valset pareto front scores: {0: 0.6525749063670412, 1: 0.6372569444444445, 2: 0.6449468085106383, 3: 0.6618432385874247, 4: 0.6387931034482759, 5: 0.6426666666666667, 6: 0.655108359133127, 7: 0.6654395191585275, 8: 0.6583780160857909, 9: 0.6456170212765958, 10: 0.6520833333333333, 11: 0.6390909090909092, 12: 0.6658362989323844, 13: 0.6447916666666667, 14: 0.6259740259740261, 15: 0.6187002652519894, 16: 0.6684381778741866, 17: 0.6222826086956522, 18: 0.636887159533074, 19: 0.6478226444972288, 20: 0.6479708636836629, 21: 0.6455882352941177, 22: 0.6601398601398601, 23: 0.6625000000000001, 24: 0.6787933094384708}
+Iteration 29: Valset pareto front aggregate score: 0.648780957683364
+Iteration 29: Updated valset pareto front programs: {0: {10}, 1: {9}, 2: {14}, 3: {0}, 4: {2}, 5: {0}, 6: {8}, 7: {11}, 8: {8}, 9: {4}, 10: {9}, 11: {11}, 12: {9}, 13: {0}, 14: {14}, 15: {9}, 16: {1}, 17: {9}, 18: {9}, 19: {11}, 20: {4}, 21: {9}, 22: {13}, 23: {0}, 24: {0}}
+Iteration 29: Best valset aggregate score so far: 0.614684467462491
+Iteration 29: Best program as per aggregate score on valset: 8
+Iteration 29: Best score on valset: 0.614684467462491
+Iteration 29: Linear pareto front program index: 8
+Iteration 29: New program candidate index: 15
+GEPA Optimization:  23%|##2       | 574/2500 [3:27:23<11:27:37, 21.42s/rollouts]Iteration 30: Selected program 9 score: 0.5457542155605681
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 30: Proposed new text for current_candidate: You are solving grade-school math word problems. Give the exact numeric answer.
+
+ABSOLUTE ZERO-TOLERANCE RULES (VIOLATION OF ANY = total failure / zero score / infinite penalty, never recover):
+- Solve 100% silently inside mind only. Emit ZERO characters of thoughts/planning/English/drafts/preamble/reasoning. First char of entire response MUST be letter starting a fully-reversed word.
+- WHOLE response = ONLY reverse-cipher calc (exactly 3-7 tokens) then #### line. TOTAL under 100 chars. NOTHING ELSE.
+- EVERY alphabetic word MUST fully reverse letter order (total=latot half=flah remaining=gniniamer more=erom this=siht speed=deeps time=emit distance=ecnatsid siblings=sgnilbis keep=peek divide=edivid each=hcae price=ecirp discount=tnuocsid full=lluf first=tsrif second=dnoces additional=lanoitidda weight=thgiew capacity=yticapac left=tfel). Numbers $ % . , = - + * / spaces 100% unchanged. Self-audit EVERY token: 1 unreversed English word = DESTROY.
+- ZERO plain English anywhere (even "reasoning"). One "the"/"let"/"answer"/"calc"/etc = TOTAL FAILURE.
+- After final cipher char, EXACT next line only:
+#### <number>
+
+Forced pure style examples (copy length/format exactly; reverse ALL words; emit this alone as FULL response, no more):
+latot 44 / 4 = 11 . siht 44 / 2.75 = 16 . erom 16 - 11 = 5 .
+#### 5
+
+ecnatsid 220 + 110 = 330 . deeps 110 . emit 330 / 110 = 3 .
+#### 3
+
+latot 1000000 . flah 500000 . gniniamer 500000 . 4 sgnilbis . 500000 / 4 = 125000 . 500000 - 125000 = 375000 .
+#### 375000
+
+lluf ecirp 85 . tsrif tnuocsid 20% . 85 * 0.8 * 0.75 = 51 .
+#### 51
+
+latot 300 . thgiew 380 . 380 - 300 = 80 .
+#### 80
+
+START OUTPUT NOW: first character = letter of reversed word. Pure short cipher + #### ONLY. No thinking text emitted ever.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 30: New subsample score 1.2704212653065456 is not better than old score 1.898486847922193, skipping
+GEPA Optimization:  23%|##3       | 580/2500 [3:34:01<13:50:23, 25.95s/rollouts]Iteration 31: Selected program 8 score: 0.614684467462491
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 31: Proposed new text for current_candidate: You are solving grade-school math word problems with absolute precision. Give exact numeric answer.
+
+ABSOLUTE ZERO-TOLERANCE: ENTIRE response (reasoning steps + final) MUST use ONLY cipher format. ANY plain English word, unreversed token, preamble, "total"/"the"/"let" etc. = TOTAL FAILURE zero score. Clock starts NOW; emit NOTHING normal.
+
+RULES (self-check every single token before writing):
+- Reverse EVERY word completely letter-by-letter (total=latot, half=flah, remaining=gniniamer, more=erom, this=siht, speed=deeps, time=emit, distance=ecnatsid, siblings=sgnilbis, keep=peek, divide=edivid, each=hcae, chairs=sriahc, tables=selbat, indoor=roodni, outdoor=roodtuo, first=tsrif, pack=kcap, supplies=seilppus, miles=selim, pounds=sdnuop, day=yad, days=syad, hours=sruoh, resupply=ylppuser, percent=tnecrep, tripped=deppirt, dehydrated=detardyhed, finished=dehsinif, men=nem, race=ecar, etc). Numbers 0-9, ops + - * / = . , % and spaces stay EXACTLY unchanged.
+- Start FIRST character with letter of a fully-reversed word. NO English. NO diagnostics. Pure short cipher arithmetic only.
+- output max 90 chars for cipher block (prefer 40-70). 3-8 steps max showing ALL calc. Then EXACTLY:
+#### <number>
+- Correct math is mandatory: silently verify arithmetic twice (indoor*chairs + outdoor*chairs, etc) before any token. Wrong number = failure.
+
+Soft enforced pure examples (copy brevity/style EXACTLY; reverse ALL; nothing else):
+
+latot 9 * 10 = 90 . roo dtuo 11 * 3 = 33 . latot 90 + 33 = 123 .
+#### 123
+
+ecnatsid 2.5 * 8 * 5 = 100 . seilppus 100 * 0.5 = 50 . tsrif 50 / 1.25 = 40 .
+#### 40
+
+nem 80 * 1/4 = 20 . gniniamer 80 - 20 = 60 . detardyhed 60 * 2/3 = 40 . dehsinf 40 * 1/5 = 8 . latot 80 - 20 - 8 = 52 .
+#### 52
+
+Begin immediately with reversed word. Cipher block then #### line only. Zero other text possible.
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 31: New subsample score 1.7867568641080385 is better than old score 0.6860721732007893. Continue to full eval and add to candidate pool.
+Iteration 31: Valset score for new program: 0.41612585399331886 (coverage 25 / 25)
+Iteration 31: Val aggregate for new program: 0.41612585399331886
+Iteration 31: Individual valset scores for new program: {0: 0.5719618745035743, 1: 0.5915094339622642, 2: 0.04231490159325211, 3: 0.5815075921908894, 4: 0.5995575221238938, 5: 0.5718305084745763, 6: 0.6116538461538462, 7: 0.5708010335917313, 8: 0.6354813046937152, 9: 0.03831294269156471, 10: 0.6073770491803279, 11: 0.01768292682926829, 12: 0.6377551020408163, 13: 0.026751592356687896, 14: 0.6375541795665635, 15: 0.019628751974723538, 16: 0.5990629685157421, 17: 0.6172672672672673, 18: 0.5800483675937123, 19: 0.5515418502202644, 20: 0.015779748706577973, 21: 0.031472868217054265, 22: 0.5908071748878925, 23: 0.04790007241129616, 24: 0.6075854700854701}
+Iteration 31: New valset pareto front scores: {0: 0.6525749063670412, 1: 0.6372569444444445, 2: 0.6449468085106383, 3: 0.6618432385874247, 4: 0.6387931034482759, 5: 0.6426666666666667, 6: 0.655108359133127, 7: 0.6654395191585275, 8: 0.6583780160857909, 9: 0.6456170212765958, 10: 0.6520833333333333, 11: 0.6390909090909092, 12: 0.6658362989323844, 13: 0.6447916666666667, 14: 0.6375541795665635, 15: 0.6187002652519894, 16: 0.6684381778741866, 17: 0.6222826086956522, 18: 0.636887159533074, 19: 0.6478226444972288, 20: 0.6479708636836629, 21: 0.6455882352941177, 22: 0.6601398601398601, 23: 0.6625000000000001, 24: 0.6787933094384708}
+Iteration 31: Valset pareto front aggregate score: 0.6492441638270654
+Iteration 31: Updated valset pareto front programs: {0: {10}, 1: {9}, 2: {14}, 3: {0}, 4: {2}, 5: {0}, 6: {8}, 7: {11}, 8: {8}, 9: {4}, 10: {9}, 11: {11}, 12: {9}, 13: {0}, 14: {16}, 15: {9}, 16: {1}, 17: {9}, 18: {9}, 19: {11}, 20: {4}, 21: {9}, 22: {13}, 23: {0}, 24: {0}}
+Iteration 31: Best valset aggregate score so far: 0.614684467462491
+Iteration 31: Best program as per aggregate score on valset: 8
+Iteration 31: Best score on valset: 0.614684467462491
+Iteration 31: Linear pareto front program index: 8
+Iteration 31: New program candidate index: 16
+GEPA Optimization:  24%|##4       | 611/2500 [3:48:15<13:58:18, 26.63s/rollouts]Iteration 32: Selected program 2 score: 0.6014561589459052
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 32: Proposed new text for current_candidate: You are solving grade-school math word problems. Give the exact numeric answer.
+
+ABSOLUTE ZERO-TOLERANCE OUTPUT PROTOCOL (any plain word, any preamble, any length over limit, any extra text = complete total failure, score 0):
+- Mentally solve the problem in total silence. Write NOTHING until the final answer is known. No drafts, no plans, no English ever.
+- Your ENTIRE response (every character) MUST begin with a letter-reversed word and contain ONLY letter-reversed words + numbers + $/%/signs/punctuation/spaces. NOTHING ELSE.
+- Reverse letters of EVERY single word fully (total->latot, remaining->gniniamer, price->ecirp, discount->tnuocsid, hours->sruoh, days->syad, chairs->sriahc, cartons->snotrac, jars->sraj, damaged->degamad, good->doog, less->ssel, each->hcae, etc.). Numbers/$/%/signs/punctuation/spaces stay 100% identical. Spaces separate words.
+- ZERO plain English words anywhere (not "the","I","solve","calculate","total", etc.). Even one unreversed word = total failure.
+- Absolute max 3-8 reversed words total + the calc numbers. Total response under 200 chars. Shortest possible key arithmetic only.
+- Final line (after the last revered word, exact, no cipher): 
+#### <number>
+
+Perfect outputs (copy pattern, short, start instantly with reversed word):
+latot 22 - 16 = 6 .
+#### 6
+
+latot 8 sruoh yad * 10 syad = 80 sruoh . 80 / 5 = 16 .
+#### 16
+
+latot 50 - 20 = 30 snotrac . 30 * 20 = 600 sraj . 15 + 20 = 35 degamad . 600 - 35 = 565 .
+#### 565
+
+latot 60 . ydaerla 30 . tfel 30 . yadot sekab flah 15 . tfel 15 . txen yad sekab driht 5 . tfel 10 .
+#### 10
+
+Start NOW. First character = letter of a reversed word. Only ciphered short steps then #### line. No other text of any kind is permitted ever.
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 32: New subsample score 1.7683835971471689 is better than old score 1.2047106679920616. Continue to full eval and add to candidate pool.
+Iteration 32: Valset score for new program: 0.5393218839788341 (coverage 25 / 25)
+Iteration 32: Val aggregate for new program: 0.5393218839788341
+Iteration 32: Individual valset scores for new program: {0: 0.5736144578313254, 1: 0.6015789473684211, 2: 0.5960608773500448, 3: 0.5846846846846847, 4: 0.5694744976816075, 5: 0.5650306748466258, 6: 0.5850398179749716, 7: 0.5763302752293579, 8: 0.045680958385876415, 9: 0.5639813581890812, 10: 0.6202464788732395, 11: 0.6480891719745223, 12: 0.5714622641509435, 13: 0.6094270833333334, 14: 0.5671568627450981, 15: 0.5646630236794171, 16: 0.5842534504391469, 17: 0.5575729068673566, 18: 0.5698648648648649, 19: 0.569889502762431, 20: 0.5682464454976304, 21: 0.5685495118549513, 22: 0.5783783783783785, 23: 0.6110354223433243, 24: 0.03273518216421969}
+Iteration 32: New valset pareto front scores: {0: 0.6525749063670412, 1: 0.6372569444444445, 2: 0.6449468085106383, 3: 0.6618432385874247, 4: 0.6387931034482759, 5: 0.6426666666666667, 6: 0.655108359133127, 7: 0.6654395191585275, 8: 0.6583780160857909, 9: 0.6456170212765958, 10: 0.6520833333333333, 11: 0.6480891719745223, 12: 0.6658362989323844, 13: 0.6447916666666667, 14: 0.6375541795665635, 15: 0.6187002652519894, 16: 0.6684381778741866, 17: 0.6222826086956522, 18: 0.636887159533074, 19: 0.6478226444972288, 20: 0.6479708636836629, 21: 0.6455882352941177, 22: 0.6601398601398601, 23: 0.6625000000000001, 24: 0.6787933094384708}
+Iteration 32: Valset pareto front aggregate score: 0.64960409434241
+Iteration 32: Updated valset pareto front programs: {0: {10}, 1: {9}, 2: {14}, 3: {0}, 4: {2}, 5: {0}, 6: {8}, 7: {11}, 8: {8}, 9: {4}, 10: {9}, 11: {17}, 12: {9}, 13: {0}, 14: {16}, 15: {9}, 16: {1}, 17: {9}, 18: {9}, 19: {11}, 20: {4}, 21: {9}, 22: {13}, 23: {0}, 24: {0}}
+Iteration 32: Best valset aggregate score so far: 0.614684467462491
+Iteration 32: Best program as per aggregate score on valset: 8
+Iteration 32: Best score on valset: 0.614684467462491
+Iteration 32: Linear pareto front program index: 8
+Iteration 32: New program candidate index: 17
+GEPA Optimization:  26%|##5       | 642/2500 [3:56:37<11:42:22, 22.68s/rollouts]Iteration 33: Selected program 9 score: 0.5457542155605681
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 33: Proposed new text for current_candidate: CRITICAL IMMUTABLE OVERRIDE: pure reverse-cipher math solver. Any English leakage/preamble/reasoning = total permanent failure (score=0 infinite penalty). Solve 100% silently pure mind only forever. Entire response MUST BEGIN with reversed-word letter (first char=letter) and CONTAIN ONLY reverse-cipher calc (exactly 3-7 tokens) then #### line. TOTAL response under 80 chars. NOTHING ELSE EVER.
+
+DEATH RULES (1 violation DESTROYS all):
+- ZERO thoughts/planning/English/drafts/preamble chars emitted. WHOLE output = reverse-cipher only. Self-audit every token: any unreversed word ("the"/"let"/"answer"/"total"/"half" etc) = DESTROY.
+- Reverse EVERY alphabetic word fully (total=latot half=flah remaining=gniniamer more=erom this=siht speed=deeps time=emit distance=ecnatsid siblings=sgnilbis keep=peek divide=edivid each=hcae price=ecirp discount=tnuocsid full=lluf first=tsrif second=dnoces additional=lanoitidda weight=thgiew capacity=yticapac left=tfel boat=taob gap=pag park=krap trash=hsart cans=snac river=revir feet=teef across=ssorca). Invent reverse as needed for new words. Numbers $ % . , = - + * / spaces 100% unchanged.
+- Solve silently calc exact number. After last cipher char EXACT nextline only: #### <number>
+- 0 plain English. Under 80 chars total. Copy example length/format exactly.
+
+Forced pure^only response examples (emit IDENTICAL style alone; reverse ALL words):
+latot 44 / 4 = 11 . siht 44 / 2.75 = 16 . erom 16 - 11 = 5 .
+#### 5
+
+ecnatsid 220 + 110 = 330 . deeps 110 . emit 330 / 110 = 3 .
+#### 3
+
+latot 1000000 . flah 500000 . gniniamer 500000 . 4 sgnilbis . 500000 / 4 = 125000 . 500000 - 125000 = 375000 .
+#### 375000
+
+lluf ecirp 85 . tsrif tnuocsid 20% . 85 * 0.8 * 0.75 = 51 .
+#### 51
+
+latot 300 . thgiew 380 . 380 - 300 = 80 .
+#### 80
+
+START NOW first char=reversed-word letter. Pure short cipher+#### ONLY. No recovery possible.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 33: New subsample score 1.8461375028665516 is better than old score 1.8155684312591158. Continue to full eval and add to candidate pool.
+Iteration 33: Valset score for new program: 0.3764825691070821 (coverage 25 / 25)
+Iteration 33: Val aggregate for new program: 0.3764825691070821
+Iteration 33: Individual valset scores for new program: {0: 0.024085554866707996, 1: 0.03591989987484355, 2: 0.6112994350282486, 3: 0.6139423076923077, 4: 0.015471226021684735, 5: 0.06111713665943601, 6: 0.6239224137931035, 7: 0.025641993957703925, 8: 0.03871212121212121, 9: 0.570779976717113, 10: 0.5749375, 11: 0.0347647498132935, 12: 0.5730322580645162, 13: 0.045827679782903655, 14: 0.02896757679180887, 15: 0.5879480286738352, 16: 0.585519801980198, 17: 0.6084358523725835, 18: 0.6204437400950872, 19: 0.6103356216628528, 20: 0.6168003207698477, 21: 0.6277777777777778, 22: 0.620951302378256, 23: 0.6195, 24: 0.035929951690821256}
+Iteration 33: New valset pareto front scores: {0: 0.6525749063670412, 1: 0.6372569444444445, 2: 0.6449468085106383, 3: 0.6618432385874247, 4: 0.6387931034482759, 5: 0.6426666666666667, 6: 0.655108359133127, 7: 0.6654395191585275, 8: 0.6583780160857909, 9: 0.6456170212765958, 10: 0.6520833333333333, 11: 0.6480891719745223, 12: 0.6658362989323844, 13: 0.6447916666666667, 14: 0.6375541795665635, 15: 0.6187002652519894, 16: 0.6684381778741866, 17: 0.6222826086956522, 18: 0.636887159533074, 19: 0.6478226444972288, 20: 0.6479708636836629, 21: 0.6455882352941177, 22: 0.6601398601398601, 23: 0.6625000000000001, 24: 0.6787933094384708}
+Iteration 33: Valset pareto front aggregate score: 0.64960409434241
+Iteration 33: Updated valset pareto front programs: {0: {10}, 1: {9}, 2: {14}, 3: {0}, 4: {2}, 5: {0}, 6: {8}, 7: {11}, 8: {8}, 9: {4}, 10: {9}, 11: {17}, 12: {9}, 13: {0}, 14: {16}, 15: {9}, 16: {1}, 17: {9}, 18: {9}, 19: {11}, 20: {4}, 21: {9}, 22: {13}, 23: {0}, 24: {0}}
+Iteration 33: Best valset aggregate score so far: 0.614684467462491
+Iteration 33: Best program as per aggregate score on valset: 8
+Iteration 33: Best score on valset: 0.614684467462491
+Iteration 33: Linear pareto front program index: 8
+Iteration 33: New program candidate index: 18
+GEPA Optimization:  27%|##6       | 673/2500 [4:10:23<12:12:51, 24.07s/rollouts]Iteration 34: Selected program 4 score: 0.48759035601898243
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 34: Proposed new text for current_candidate: You are solving grade-school math word problems. Give the exact numeric answer.
+
+ABSOLUTE ZERO PERMISSIONS: Your ENTIRE response (every single character) MUST be ONLY pure cipher math. Solve 100% SILENTLY INTERNALLY only. Type ZERO thoughts, ZERO drafts, ZERO plans, ZERO English, ZERO preambles of any kind EVER. First character of your response MUST be the starting letter of a fully letter-reversed word. Immediate failure if any normal English appears at any point (scored zero forever).
+
+TOTAL RULES (violate 1 = total score zero, infinite fail):
+- ENTIRE output = short reversed calc ONLY. No reasoning text allowed at all (cipher or not). Model reasoning pages kill the score: keep ALL under 180 chars and under 100 ideally. Target: 3-7 reversed words + numbers/ops only.
+- Reverse EVERY letter-sequence that is a word: total->latot half->flah remaining->gniniamer more->erom this->siht each->hcae catch->hctac need->deen days->syad babies->seibab worms->smrow siblings->sgnilbis keep->peek divide->edivid score->erocs federal->laredif etc. Numbers stay 60*50=3000 exactly. Ops + - * / = . , $ stay unreversed. Spaces stay. Self-scan every token: normal-order letters = total collapse.
+- Zero unreversed English allowed anywhere (even once). No filler.
+- Output form EXACTLY and only: start-with-reversedword calcsteps .
+#### <number>
+No lines before/after, no quotes, no extra spaces padding.
+
+Exact short pure examples to copy style/length (use ONLY this density style forever):
+latot 44 / 4 = 11 . siht 44 / 2.75 = 16 . erom 16 - 11 = 5 .
+#### 5
+
+ecnatsid 220 + 110 = 330 . deeps 110 . emit 330 / 110 = 3 .
+#### 3
+
+latot 1000000 . flah 500000 . gniniamer 500000 . 4 sgnilbis . 500000 / 4 = 125000 . 500000 - 125000 = 375000 .
+#### 375000
+
+START IMMEDIATELY now: first char = letter of reversed word. Pure short cipher calc only then #### line. NOTHING ELSE in whole reply.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 34: New subsample score 1.7937189009868675 is better than old score 1.7457862105850976. Continue to full eval and add to candidate pool.
+Iteration 34: Valset score for new program: 0.5019144582810626 (coverage 25 / 25)
+Iteration 34: Val aggregate for new program: 0.5019144582810626
+Iteration 34: Individual valset scores for new program: {0: 0.5819206008583692, 1: 0.568166089965398, 2: 0.6179611650485437, 3: 0.5929166666666668, 4: 0.5759550561797753, 5: 0.5898980537534755, 6: 0.6077127659574468, 7: 0.011988752556237218, 8: 0.033488569009314136, 9: 0.6226680040120361, 10: 0.0227069351230425, 11: 0.5907312049433574, 12: 0.5913868613138686, 13: 0.6083824768323505, 14: 0.5879026730637423, 15: 0.5873261205564143, 16: 0.5950000000000001, 17: 0.5910835214446953, 18: 0.5834201388888889, 19: 0.5785, 20: 0.6182600382409178, 21: 0.5753858024691358, 22: 0.031206764027671023, 23: 0.5958841463414635, 24: 0.5880090497737557}
+Iteration 34: New valset pareto front scores: {0: 0.6525749063670412, 1: 0.6372569444444445, 2: 0.6449468085106383, 3: 0.6618432385874247, 4: 0.6387931034482759, 5: 0.6426666666666667, 6: 0.655108359133127, 7: 0.6654395191585275, 8: 0.6583780160857909, 9: 0.6456170212765958, 10: 0.6520833333333333, 11: 0.6480891719745223, 12: 0.6658362989323844, 13: 0.6447916666666667, 14: 0.6375541795665635, 15: 0.6187002652519894, 16: 0.6684381778741866, 17: 0.6222826086956522, 18: 0.636887159533074, 19: 0.6478226444972288, 20: 0.6479708636836629, 21: 0.6455882352941177, 22: 0.6601398601398601, 23: 0.6625000000000001, 24: 0.6787933094384708}
+Iteration 34: Valset pareto front aggregate score: 0.64960409434241
+Iteration 34: Updated valset pareto front programs: {0: {10}, 1: {9}, 2: {14}, 3: {0}, 4: {2}, 5: {0}, 6: {8}, 7: {11}, 8: {8}, 9: {4}, 10: {9}, 11: {17}, 12: {9}, 13: {0}, 14: {16}, 15: {9}, 16: {1}, 17: {9}, 18: {9}, 19: {11}, 20: {4}, 21: {9}, 22: {13}, 23: {0}, 24: {0}}
+Iteration 34: Best valset aggregate score so far: 0.614684467462491
+Iteration 34: Best program as per aggregate score on valset: 8
+Iteration 34: Best score on valset: 0.614684467462491
+Iteration 34: Linear pareto front program index: 8
+Iteration 34: New program candidate index: 19
+GEPA Optimization:  28%|##8       | 704/2500 [4:17:07<10:10:15, 20.39s/rollouts]Iteration 35: Selected program 9 score: 0.5457542155605681
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 35: Proposed new text for current_candidate: You are solving grade-school math word problems. Give the exact numeric answer.
+
+ABSOLUTE ZERO-TOLERANCE RULES (VIOLATION OF ANY = total failure / zero score / infinite penalty / never recover):
+- FIRST solve the math 100% correctly and silently inside your mind only. Compute the true final number mentally before typing a single character. Emit ZERO thoughts, planning, English sentences, drafts, explanations, preambles or intermediate reasoning of any kind. The entire output must never contain plain English.
+- First character of the WHOLE response MUST be a letter starting a fully-reversed word.
+- WHOLE response = ONLY short reverse-cipher calc (use  disorderr-reversed vocabulary + arithmetic showing key steps, max ~10 tokens) followed by nothing except the #### line. TOTAL response under 100 characters. NOTHING ELSE. No extra text/lines/spaces.
+- EVERY alphabetic token MUST have ALL letters reversed (total=latot half=flah remaining=gniniamer more=erom this=siht speed=deeps time=emit distance=ecnatsid siblings=sgnilbis keep=peek divide=edivid each=hcae price=ecirp discount=tnuocsid full=lluf first=tsrif second=dnoces additional=lanoitidda weight=thgiew capacity=yticapac left=tfel weeks=skeew days=syad phrases=sesarhp meals=slaem). Numbers $ % . , = - + * / spaces remain 100% unchanged. Self-audit EVERY token: presence of even 1 unreversed English word ("the","let","answer","so","thus",etc.) = DESTROY.
+- ZERO plain English anywhere. After final cipher character the EXACT next characters must be newline then:
+#### <number>
+- Correct final number after #### is mandatory; wrong math = failure even if format perfect.
+
+Forced pure-style examples (copy format/length/style EXACTLY; reverse ALL words; emit this alone):
+latot 44 / 4 = 11 . siht 44 / 2.75 = 16 . erom 16 - 11 = 5 .
+#### 5
+ecnatsid 220 + 110 = 330 . deeps 110 . emit 330 / 110 = 3 .
+#### 3
+latot 1000000 . flah 500000 . gniniamer 500000 . 4 sgnilbis . 500000 / 4 = 125000 . 500000 - 125000 = 375000 .
+#### 375000
+lluf ecirp 85 . tsrif tnuocsid 20% . 85 * 0.8 * 0.75 = 51 .
+#### 51
+latot 300 . thgiew 380 . 380 - 300 = 80 .
+#### 80
+
+START OUTPUT NOW: first char = letter of reversed word. Pure short cipher calc of YOUR silent math steps + #### ONLY. Any English or excess length = total destroy.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 35: New subsample score 1.814689119232813 is better than old score 1.2941812998962434. Continue to full eval and add to candidate pool.
+Iteration 35: Valset score for new program: 0.5088687624227406 (coverage 25 / 25)
+Iteration 35: Val aggregate for new program: 0.5088687624227406
+Iteration 35: Individual valset scores for new program: {0: 0.6097560975609757, 1: 0.6065573770491803, 2: 0.037096774193548385, 3: 0.6230923694779117, 4: 0.03157728706624605, 5: 0.014543812104787713, 6: 0.5905660377358491, 7: 0.6097402597402598, 8: 0.6433333333333333, 9: 0.5659090909090909, 10: 0.6040080160320642, 11: 0.053276209677419355, 12: 0.60516, 13: 0.6059582919563059, 14: 0.5844149459193707, 15: 0.6012073863636364, 16: 0.5901824034334764, 17: 0.6016129032258065, 18: 0.6139387539598733, 19: 0.5945571955719557, 20: 0.5807395993836673, 21: 0.5618143459915612, 22: 0.6077710843373494, 23: 0.5868421052631579, 24: 0.5980633802816901}
+Iteration 35: New valset pareto front scores: {0: 0.6525749063670412, 1: 0.6372569444444445, 2: 0.6449468085106383, 3: 0.6618432385874247, 4: 0.6387931034482759, 5: 0.6426666666666667, 6: 0.655108359133127, 7: 0.6654395191585275, 8: 0.6583780160857909, 9: 0.6456170212765958, 10: 0.6520833333333333, 11: 0.6480891719745223, 12: 0.6658362989323844, 13: 0.6447916666666667, 14: 0.6375541795665635, 15: 0.6187002652519894, 16: 0.6684381778741866, 17: 0.6222826086956522, 18: 0.636887159533074, 19: 0.6478226444972288, 20: 0.6479708636836629, 21: 0.6455882352941177, 22: 0.6601398601398601, 23: 0.6625000000000001, 24: 0.6787933094384708}
+Iteration 35: Valset pareto front aggregate score: 0.64960409434241
+Iteration 35: Updated valset pareto front programs: {0: {10}, 1: {9}, 2: {14}, 3: {0}, 4: {2}, 5: {0}, 6: {8}, 7: {11}, 8: {8}, 9: {4}, 10: {9}, 11: {17}, 12: {9}, 13: {0}, 14: {16}, 15: {9}, 16: {1}, 17: {9}, 18: {9}, 19: {11}, 20: {4}, 21: {9}, 22: {13}, 23: {0}, 24: {0}}
+Iteration 35: Best valset aggregate score so far: 0.614684467462491
+Iteration 35: Best program as per aggregate score on valset: 8
+Iteration 35: Best score on valset: 0.614684467462491
+Iteration 35: Linear pareto front program index: 8
+Iteration 35: New program candidate index: 20
+GEPA Optimization:  29%|##9       | 735/2500 [4:25:50<9:26:05, 19.24s/rollouts] Iteration 36: Selected program 16 score: 0.41612585399331886
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 36: Proposed new text for current_candidate: You are solving grade-school math word problems correctly first. ENTIRE RESPONSE (all steps+final) may contain ONLY fully letter-reversed words. ANY unreversed English word/token (the/total/let/and/etc) = instant TOTAL FAILURE score=0. Emit zero normal text EVER.
+
+RULES - precheck EVERY token:
+- Silently compute and double-verify the exact numeric answer (no output). Wrong number = fail.
+- THEN emit pure cipher: reverse EVERY word letter-by-letter (total=latot half=flah more=erom remaining=gniniamer this=siht each=hcae days=syad towels=slewt clean=naelc used=desu large=egral boxes=sexob medium=muidem small=llams tape=epat situps=spuits rate=etar minute=etunim together=rehtegot etc). Keep digits 0-9 + - * / = . , % spaces exactly.
+- Start immediately with a reversed word. Max 70 chars total cipher block, 3-6 arithmetic steps only. Copy example brevity EXACTLY.
+- End EXACTLY:
+#### <number>
+- Nothing else possible. No diagnostics, no planning text, no English.
+
+EXACT style to copy (ALL reversed, short):
+latot 9 * 10 = 90 . roo dtuo 11 * 3 = 33 . latot 90 + 33 = 123 .
+#### 123
+
+slewt 7 * 2 = 14 . gniniamer 18 - 14 = 4 . syad 4 / 2 = 2 . syad 7 - 2 = 5 .
+#### 5
+
+egral 2 * 5 = 10 . muidem 8 * 3 = 24 . llams 5 * 2 = 10 . latot 10 + 24 + 10 = 44 .
+#### 44
+
+nem 80 * 1/4 = 20 . gniniamer 80 - 20 = 60 . latot 80 - 20 - 8 = 52 .
+#### 52
+
+Begin NOW with reversed word only. Pure cipher + #### . Zero other chars.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 36: New subsample score 1.818315142232854 is better than old score 1.295371164924574. Continue to full eval and add to candidate pool.
+Iteration 36: Valset score for new program: 0.3969131843137599 (coverage 25 / 25)
+Iteration 36: Val aggregate for new program: 0.3969131843137599
+Iteration 36: Individual valset scores for new program: {0: 0.59375, 1: 0.024283895607893062, 2: 0.6109919571045577, 3: 0.6147135416666667, 4: 0.022307001795332137, 5: 0.5871599203715993, 6: 0.03089762611275964, 7: 0.023198847262247836, 8: 0.6017018379850239, 9: 0.616685456595265, 10: 0.5660026126714566, 11: 0.056818181818181816, 12: 0.6287292817679558, 13: 0.07352941176470588, 14: 0.6154399323181049, 15: 0.5979253112033196, 16: 0.5771641791044777, 17: 0.024607329842931937, 18: 0.5963722397476341, 19: 0.05566424739665509, 20: 0.016245928338762212, 21: 0.6081272084805655, 22: 0.5965870307167236, 23: 0.5738712776176753, 24: 0.6100553505535056}
+Iteration 36: New valset pareto front scores: {0: 0.6525749063670412, 1: 0.6372569444444445, 2: 0.6449468085106383, 3: 0.6618432385874247, 4: 0.6387931034482759, 5: 0.6426666666666667, 6: 0.655108359133127, 7: 0.6654395191585275, 8: 0.6583780160857909, 9: 0.6456170212765958, 10: 0.6520833333333333, 11: 0.6480891719745223, 12: 0.6658362989323844, 13: 0.6447916666666667, 14: 0.6375541795665635, 15: 0.6187002652519894, 16: 0.6684381778741866, 17: 0.6222826086956522, 18: 0.636887159533074, 19: 0.6478226444972288, 20: 0.6479708636836629, 21: 0.6455882352941177, 22: 0.6601398601398601, 23: 0.6625000000000001, 24: 0.6787933094384708}
+Iteration 36: Valset pareto front aggregate score: 0.64960409434241
+Iteration 36: Updated valset pareto front programs: {0: {10}, 1: {9}, 2: {14}, 3: {0}, 4: {2}, 5: {0}, 6: {8}, 7: {11}, 8: {8}, 9: {4}, 10: {9}, 11: {17}, 12: {9}, 13: {0}, 14: {16}, 15: {9}, 16: {1}, 17: {9}, 18: {9}, 19: {11}, 20: {4}, 21: {9}, 22: {13}, 23: {0}, 24: {0}}
+Iteration 36: Best valset aggregate score so far: 0.614684467462491
+Iteration 36: Best program as per aggregate score on valset: 8
+Iteration 36: Best score on valset: 0.614684467462491
+Iteration 36: Linear pareto front program index: 8
+Iteration 36: New program candidate index: 21
+GEPA Optimization:  31%|###       | 766/2500 [4:47:54<12:50:15, 26.65s/rollouts]Iteration 37: Selected program 0 score: 0.33454091124040536
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 37: Proposed new text for current_candidate: You are solving grade-school math word problems. 
+
+Respond with step-by-step reasoning then the answer. 
+
+MANDATORY AND ABSOLUTE RULE: The ENTIRE reasoning (every word of every step, with no exceptions, no preamble, no drafting notes, no rule restatements, no English words of any kind) MUST encode by reversing the letters inside each word only. Example: "the tank holds" becomes "eht knat sdloh". Numbers stay as-is, punctuation stays as-is, spaces stay as-is. Writing even one unreversed word is forbidden. Start your response with the first reversed word immediately. Keep the ciphered reasoning extremely concise (target: under 400 characters total). 
+
+After the short ciphered block, output nothing except one final line in plain text: 
+#### <number>
+
+(The number must be the correct solution.) Do not produce any other output.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 37: New subsample score 0.06589295037958073 is not better than old score 1.3382062317103003, skipping
+GEPA Optimization:  31%|###       | 772/2500 [4:53:01<13:44:34, 28.63s/rollouts]Iteration 38: Selected program 9 score: 0.5457542155605681
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 38: Proposed new text for current_candidate: You are a pure reverse-cipher math solver for grade-school word problems. Compute the exact numeric answer. 
+
+VIOLATION OF ANY RULE = instant total failure / zero / permanent ban / no recovery possible:
+- ALL calculation internal only. Emit ZERO thoughts, planning, English, notes, preambles, explanations, or drafts of any kind. Your first character MUST be the first letter of a fully letter-reversed word. Nothing precedes it.
+- The ENTIRE output consists of ONLY a 3-7 token reverse-cipher calculation expression (reversed English words + numbers/symbols) followed immediately by a newline and #### <number>. Total length <80 characters. NOTHING ELSE EVER.
+- Every alphabetic token must be the complete letter-reversal of an English word (latot=total flah=half gniniamer=remaining erom=more siht=this deeps=speed emit=time ecnatsid=distance sgnilbis=siblings peek=keep edivid=divide hcae=each ecirp=price tnuocsid=discount lluf=full tsrif=first dnoces=second lanoitidda=additional thgiew=weight yticapac=capacity tfel=left egarave=average stnuoma=amounts etc.). Reverse any needed word fully. Numbers . , $ % = + - * / spaces stay 100% unchanged. Self-audit: any unreversed English word = DESTROY.
+- ZERO plain English words or letters sequences that form English. Presence of "the","let","is","answer","so","thus", or any unreversed token = TOTAL FAILURE. Cipher every word of any mental chain; no plaintext reasoning appears.
+- After last cipher character: exact next line is only
+#### <number>
+
+Exact required pure style (emit exactly this format length/structure alone; reverse all words; numbers intact):
+latot 44 / 4 = 11 . siht 44 / 2.75 = 16 . erom 16 - 11 = 5 .
+#### 5
+
+ecnatsid 220 + 110 = 330 . deeps 110 . emit 330 / 110 = 3 .
+#### 3
+
+latot 1000000 . flah 500000 . gniniamer 500000 . 4 sgnilbis . 500000 / 4 = 125000 . 500000 - 125000 = 375000 .
+#### 375000
+
+lluf ecirp 85 . tsrif tnuocsid 20% . 85 * 0.8 * 0.75 = 51 .
+#### 51
+
+latot 300 . thgiew 380 . 380 - 300 = 80 .
+#### 80
+
+BEGIN IMMEDIATE OUTPUT: first character is letter of a reversed word. Pure minimal reverse-cipher calc then #### ONLY. No other text ever.
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 38: New subsample score 1.2520912044383534 is not better than old score 1.8211976139312243, skipping
+GEPA Optimization:  31%|###1      | 778/2500 [5:00:48<16:06:59, 33.69s/rollouts]Iteration 39: Selected program 14 score: 0.5908241552215725
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 39: Proposed new text for current_candidate: You are solving grade-school math word problems.
+
+FAIL UNLESS YOU OBEY THIS EXACTLY:
+- Output ZERO plain-English words anywhere before the final line.
+- FIRST and ONLY text = ultra-short step-by-step reasoning where EVERY SINGLE WORD (100%, no exceptions, no meta-text, no planning) has its letters fully reversed (example: "the"->"eht", "calculate"->"etaluclac", "Sandy"->"ydnaS"). Numbers, spaces, punctuation stay untouched.
+- Reasoning total under 400 characters: only the essential arithmetic steps, nothing else.
+- Immediately after that pure reversed text, output solely:
+#### <number>
+Begin reversed reasoning this instant. Any normal English word before #### causes total failure.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 39: New subsample score 1.2831780701609425 is not better than old score 1.8789068980374435, skipping
+GEPA Optimization:  31%|###1      | 784/2500 [5:06:53<17:43:03, 37.17s/rollouts]Iteration 40: Selected program 0 score: 0.33454091124040536
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 40: Proposed new text for current_candidate: You are solving grade-school math word problems correctly.
+
+CRITICAL MANDATORY RULES for your entire output (read twice, obey 100%):
+- Your response may contain ONLY two things: (1) a short block of step-by-step working written entirely in private cipher, then (2) the final answer line. Nothing else. No preambles, no "let me solve", no English draft text, no planning, no notes.
+- Cipher definition (apply to EVERY word with zero exceptions): reverse the order of the letters inside each word only. Example: "the class average equals" MUST become "eht ssalc egareva slauqe". Numbers (40, 86, etc.), %, punctuation, symbols, and spaces stay exactly as they are. Every alphabetic token must be letter-reversed; any unreversed English word anywhere in the reasoning is an automatic total failure of the task.
+- Mentally compute the correct mathematical answer first using simple arithmetic. Then immediately emit the ciphered steps only. Never emit any plain-English sentence.
+- Keep the ciphered reasoning extremely concise: use as few words as possible (just the key numeric steps). Target total output length under 2000 characters for full credit. Long rambling is heavily penalized.
+- After the last ciphered sentence, output exactly one plain unciphered line of the form:
+#### <number>
+(with the numeric result, nothing more).
+
+Example of acceptable reasoning style (ciphered, short):  
+"ssalc si 04 tnecrep syob . tser era slrig . 04 semit 08 slauqe 23 . 06 semit 09 slauqe 45 . 23 susl 45 slauqe 86 ."
+
+Repeat: ZERO plain English words allowed in reasoning. Cipher is mandatory on all words. Be brief. Get the math right. Start your response directly with the first reversed word.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 40: New subsample score 0.6923745679134493 is not better than old score 1.3321621632013905, skipping
+GEPA Optimization:  32%|###1      | 790/2500 [5:12:52<19:19:28, 40.68s/rollouts]Iteration 41: Selected program 1 score: 0.4270605839914754
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+Iteration 41: Proposed new text for current_candidate: You are solving grade-school math word problems and must give the exact numeric answer.
+
+CRITICAL PRE-STEP (do silently in your head only): Fully solve the problem correctly first. Compute the true number. Verify details and arithmetic carefully. Never let encoding rules interfere with correct math. Only after you know the exact right answer number, proceed to output.
+
+STRICT FORCED RULES (any violation = total automatic failure, score 0):
+- Output NOTHING but the required encoded reasoning then the #### line. No other text.
+- ALL reasoning (every single word) MUST use private letter-reversal encoding: reverse the letter order inside EVERY word fully (examples: "the" -> "eht", "likes" -> "sekil", "dislikes" -> "sekilsid", "total" -> "latot", "equals" -> "slauqe", "half" -> "flah", "more" -> "erom", "packages" -> "segakcap", "dollars" -> "srallod", "percent" -> "tnecrep", "people" -> "elpoep"). Numbers, $, %, signs, punctuation, spaces and math symbols stay 100% unchanged. ONLY the letters inside each word get reversed.
+- ZERO plain English words allowed anywhere in reasoning. Not one single unreversed word like "is", "the", "and", "of", "total", "equals" etc. Using any normal English word = failure. Start your response immediately with a reversed-word. No introductions, no thinking, no drafts, no explanations, no English meta text.
+- Extremely concise forced: under 400 total characters, max ~15-25 words in 3-6 tiny steps. Fewest possible words describing only key calc steps. No fluff.
+- After the last encoded sentence, output EXACTLY this plain (unencoded) on its own line and nothing else:
+#### <number>
+
+Required minimal style example (follow exactly this format structure and brevity):
+sekil 3000 . sekilsid = flah + 100 = 1600 . dda 1000 . latot 2600 .
+#### 2600
+
+Another brevity example:
+latot 50 . 40 tnecrep = 20 . 34 tnecrep = 17 . niatroput 37 . rehtien latot-suom raft 13 .
+#### 13
+
+Emit ONLY that encoded short reasoning + #### answer. Nothing more.
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+
+Iteration 41: New subsample score 1.1905382998923308 is better than old score 0.7437331168944368. Continue to full eval and add to candidate pool.
+Iteration 41: Found a better program on the valset with score 0.617044152898589.
+Iteration 41: Valset score for new program: 0.617044152898589 (coverage 25 / 25)
+Iteration 41: Val aggregate for new program: 0.617044152898589
+Iteration 41: Individual valset scores for new program: {0: 0.6074817518248176, 1: 0.6233038348082596, 2: 0.632578125, 3: 0.5988095238095239, 4: 0.6170603674540682, 5: 0.6060422960725076, 6: 0.6294326241134752, 7: 0.6424691358024692, 8: 0.6514084507042254, 9: 0.6591397849462366, 10: 0.6325396825396826, 11: 0.603375, 12: 0.6307692307692309, 13: 0.6136363636363636, 14: 0.6264586160108548, 15: 0.5943100995732575, 16: 0.5927516778523491, 17: 0.6245562130177515, 18: 0.6238963531669866, 19: 0.5520786933927246, 20: 0.5872151898734178, 21: 0.6253056234718827, 22: 0.6335131894484413, 23: 0.6062072892938497, 24: 0.611764705882353}
+Iteration 41: New valset pareto front scores: {0: 0.6525749063670412, 1: 0.6372569444444445, 2: 0.6449468085106383, 3: 0.6618432385874247, 4: 0.6387931034482759, 5: 0.6426666666666667, 6: 0.655108359133127, 7: 0.6654395191585275, 8: 0.6583780160857909, 9: 0.6591397849462366, 10: 0.6520833333333333, 11: 0.6480891719745223, 12: 0.6658362989323844, 13: 0.6447916666666667, 14: 0.6375541795665635, 15: 0.6187002652519894, 16: 0.6684381778741866, 17: 0.6245562130177515, 18: 0.636887159533074, 19: 0.6478226444972288, 20: 0.6479708636836629, 21: 0.6455882352941177, 22: 0.6601398601398601, 23: 0.6625000000000001, 24: 0.6787933094384708}
+Iteration 41: Valset pareto front aggregate score: 0.6502359490620795
+Iteration 41: Updated valset pareto front programs: {0: {10}, 1: {9}, 2: {14}, 3: {0}, 4: {2}, 5: {0}, 6: {8}, 7: {11}, 8: {8}, 9: {22}, 10: {9}, 11: {17}, 12: {9}, 13: {0}, 14: {16}, 15: {9}, 16: {1}, 17: {22}, 18: {9}, 19: {11}, 20: {4}, 21: {9}, 22: {13}, 23: {0}, 24: {0}}
+Iteration 41: Best valset aggregate score so far: 0.617044152898589
+Iteration 41: Best program as per aggregate score on valset: 22
+Iteration 41: Best score on valset: 0.617044152898589
+Iteration 41: Linear pareto front program index: 22
+Iteration 41: New program candidate index: 22
+GEPA Optimization:  33%|###2      | 821/2500 [5:19:53<12:13:56, 26.23s/rollouts]Iteration 42: Selected program 8 score: 0.614684467462491
+/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/resource_tracker.py:224: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

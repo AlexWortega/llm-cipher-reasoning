@@ -1,0 +1,6 @@
+.env
+__pycache__/
+*.pyc
+hf_cache/
+checkpoints/
+.DS_Store

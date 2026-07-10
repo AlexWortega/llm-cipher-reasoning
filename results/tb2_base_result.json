@@ -1,0 +1,51 @@
+{
+    "id": "460ee3a9-10d9-4fda-a5f2-c5ac415890ea",
+    "started_at": "2026-07-10T19:39:36.969314",
+    "updated_at": "2026-07-10T19:58:16.008157",
+    "finished_at": "2026-07-10T19:58:16.008157",
+    "n_total_trials": 8,
+    "stats": {
+        "n_completed_trials": 8,
+        "n_errored_trials": 2,
+        "n_running_trials": 0,
+        "n_pending_trials": 0,
+        "n_cancelled_trials": 0,
+        "n_retries": 0,
+        "evals": {
+            "terminus-2__Qwen/Qwen3-4B-Instruct-2507__terminal-bench": {
+                "n_trials": 8,
+                "n_errors": 2,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "pass_at_k": {},
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "password-recovery__FJv4oBP",
+                            "fix-git__4FdTTaS",
+                            "count-dataset-tokens__jW8WoTn",
+                            "regex-log__gubvU3L",
+                            "nginx-request-logging__BKhAgqt",
+                            "large-scale-text-editing__T2U7L5K",
+                            "sqlite-db-truncate__GEv8gQy",
+                            "openssl-selfsigned-cert__2y27E6k"
+                        ]
+                    }
+                },
+                "exception_stats": {
+                    "AgentTimeoutError": [
+                        "count-dataset-tokens__jW8WoTn",
+                        "sqlite-db-truncate__GEv8gQy"
+                    ]
+                }
+            }
+        },
+        "n_input_tokens": 3317470,
+        "n_cache_tokens": 0,
+        "n_output_tokens": 73730,
+        "cost_usd": null
+    }
+}

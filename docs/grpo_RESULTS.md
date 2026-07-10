@@ -267,3 +267,87 @@ Rounds 1-5 in the parent session (`~/autoresearch-runs/llm-cipher-language/`).
 - On eva02: `~/grpo_cipher/ckpt_phase0` (warmup), `~/grpo_cipher/ckpt_phase1` (Round A result),
   `~/grpo_cipher/ckpt_phase_eff` (Round B, in progress), `phase0.log` / `phase1.log` /
   `phase_eff.log` (full training logs), `reward_log_phase*.jsonl` (periodic qualitative samples)
+
+## Round A (scaled), out-of-domain evaluation: AIME 2026 + TerminalBench 2.0
+
+Following the LR-bug fix (see above), Round A was rerun at scale: LoRA r=32, LR=1.5e-5, beta=0.06,
+600 steps, **full 7473-example GSM8K training set** (no subsampling), batch=8×num_generations=16,
+on the same shared RTX A6000 (eva02). This produced `ckpt_phase1_scaled`, ~9.5 hours of training.
+Final training-time metrics (last logged step): correctness reward 1.875/2.0, cipher-adherence
+reward 1.375/1.5, KL 0.13-0.16 throughout (stable, never approached the 0.3-0.4 instability
+threshold used elsewhere in this project).
+
+**Weight-movement sanity check** (same technique as the Round B LR-bug diagnosis: LoRA adapter
+L2-norm diff via `safetensors.torch.load_file`, summed across all tensors, normalized by the
+baseline's total norm): `ckpt_phase1_scaled` vs `ckpt_phase0_r32` (the r=32 warmup baseline) =
+**3.54% relative movement** — consistent with real training having occurred (compare to the
+<1% signature that flagged the original LR=2e-6 bug, and to Round B's corrected run at 3.45%).
+
+The user then asked for two out-of-domain benchmarks to check whether the narrow GSM8K
+cipher-reasoning fine-tune transfers anywhere: **AIME 2026** (harder, olympiad-level math) and
+**TerminalBench 2.0** (general agentic terminal-use). Both were run base-vs-trained via a locally
+hosted sglang server (Qwen3-4B-Instruct-2507 base model, `ckpt_phase1_scaled` LoRA adapter for the
+trained condition) so the comparison uses the exact same serving stack for both conditions.
+
+### AIME 2026 (30 held-out problems, MathArena dataset, temperature=0.3)
+
+| Condition | Accuracy |
+|---|---|
+| Base (untrained, concise-cipher-style system prompt) | 36.67% (11/30) |
+| Trained (`ckpt_phase1_scaled` LoRA) | 36.67% (11/30) |
+
+**Identical accuracy, and not just coincidentally close — both conditions got exactly 11/30
+right.** GRPO fine-tuning narrowly on GSM8K-level (grade-school) cipher-reasoning produced no
+measurable change, positive or negative, on held-out olympiad-level math. This is plausible on its
+face: AIME-level problems are far outside the training distribution's difficulty range, and a
+LoRA adapter tuned on an easier task has no particular reason to help or hurt a much harder one.
+
+### TerminalBench 2.0 (8-task representative subset, harbor's terminus-2 reference agent)
+
+Tasks: `fix-git`, `regex-log`, `sqlite-db-truncate`, `password-recovery`, `large-scale-text-editing`,
+`nginx-request-logging`, `openssl-selfsigned-cert`, `count-dataset-tokens` (chosen as a disk- and
+time-bounded subset of the full 89-task Terminal-Bench 2.0 registry — see infra note below on why
+disk was a real constraint on this shared host).
+
+| Condition | Mean reward | Breakdown |
+|---|---|---|
+| Base | 0.0 / 8 | 6 genuine task failures + 2 `AgentTimeoutError` |
+| Trained (`ckpt_phase1_scaled` LoRA) | 0.0 / 8 | 6 genuine task failures + 2 `AgentTimeoutError` |
+
+Both conditions failed every task in the subset. Real token usage was confirmed for both runs
+(millions of input tokens, tens of thousands of output tokens across the 8 trials each) — these
+are genuine multi-turn agent attempts, not short-circuited errors. This should **not** be read as
+"the cipher training broke agentic ability" — the base (untrained) condition failed identically,
+so there is no differential effect either way. It more likely reflects that terminus-2 (designed
+around larger, more capable models) is a hard harness for a 4B model in general, independent of
+this fine-tune.
+
+### Infra debugging notes (for reproducibility)
+
+Standing up local sglang serving + harbor evaluation on eva02 required three fixes, none related
+to the trained model itself:
+1. **flashinfer JIT compile failure**: sglang's default attention backend JIT-compiles CUDA
+   kernels via nvcc at first request; this failed with `fatal error: math.h: No such file or
+   directory` from inside `#include_next` despite the file existing — a known nvcc/gcc header
+   include-order quirk on this host's gcc-13/CUDA-12.0 combination. Fixed by passing
+   `--attention-backend triton` to `sglang.launch_server`, which avoids the flashinfer CUDA JIT
+   path entirely.
+2. **harbor/litellm missing credentials**: TerminalBench2 trials all failed with
+   `InternalServerError` → `Missing credentials... OPENAI_API_KEY`. Harbor's `--ae` flag only
+   injects env vars into the sandboxed *agent's* execution environment, not into harbor's own
+   host-side litellm client that actually places the API call. Fixed by setting
+   `OPENAI_API_KEY=dummy` as a real process env var on the `harbor run` invocation itself.
+3. **sglang LoRA + radix-cache incompatibility**: the trained condition's server crashed on
+   startup with `AssertionError: compatibility of lora and radix attention is in progress`. Fixed
+   by adding `--disable-radix-cache` alongside `--lora-paths`/`--enable-lora`.
+
+### Verdict
+
+Combined with the corrected in-domain GSM8K result above (Round B: GRPO training measurably beats
+prompting-only, +1.4pp accuracy / -7.8% tokens), this scaled Round A run shows the cipher-reasoning
+GRPO training produces **real in-domain movement with no detectable transfer — positive or
+negative — to harder math or general agentic tasks**. For a LoRA adapter trained narrowly on
+grade-school-level cipher-reasoning, this is an honest, plausible outcome rather than a failure
+that demands further tuning: the training objective simply never touched anything resembling
+AIME-level math or shell/tool-use, so no transfer (in either direction) is exactly what a
+faithful measurement should show.

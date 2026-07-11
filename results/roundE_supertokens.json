@@ -1,0 +1,165 @@
+{
+  "corpus_size": 238,
+  "min_freq": 4,
+  "top_k": 48,
+  "supertokens": [
+    {
+      "surface": "Total",
+      "token_ids": [
+        2303,
+        7595
+      ],
+      "freq": 22,
+      "n": 2,
+      "tokens_saved_per_use": 1,
+      "new_token": "<ST0>"
+    },
+    {
+      "surface": "Total:",
+      "token_ids": [
+        2303,
+        7595,
+        25,
+        220
+      ],
+      "freq": 6,
+      "n": 4,
+      "tokens_saved_per_use": 3,
+      "new_token": "<ST1>"
+    },
+    {
+      "surface": "total",
+      "token_ids": [
+        2303,
+        5035
+      ],
+      "freq": 11,
+      "n": 2,
+      "tokens_saved_per_use": 1,
+      "new_token": "<ST2>"
+    },
+    {
+      "surface": "Total time",
+      "token_ids": [
+        2303,
+        7595,
+        882
+      ],
+      "freq": 5,
+      "n": 3,
+      "tokens_saved_per_use": 2,
+      "new_token": "<ST3>"
+    },
+    {
+      "surface": "Day",
+      "token_ids": [
+        2303,
+        10159,
+        220
+      ],
+      "freq": 4,
+      "n": 3,
+      "tokens_saved_per_use": 2,
+      "new_token": "<ST4>"
+    },
+    {
+      "surface": "min",
+      "token_ids": [
+        1308,
+        2303
+      ],
+      "freq": 7,
+      "n": 2,
+      "tokens_saved_per_use": 1,
+      "new_token": "<ST5>"
+    },
+    {
+      "surface": "hours",
+      "token_ids": [
+        4115,
+        2303
+      ],
+      "freq": 5,
+      "n": 2,
+      "tokens_saved_per_use": 1,
+      "new_token": "<ST6>"
+    },
+    {
+      "surface": "days",
+      "token_ids": [
+        2849,
+        2303
+      ],
+      "freq": 5,
+      "n": 2,
+      "tokens_saved_per_use": 1,
+      "new_token": "<ST7>"
+    },
+    {
+      "surface": "total",
+      "token_ids": [
+        2790,
+        2303
+      ],
+      "freq": 5,
+      "n": 2,
+      "tokens_saved_per_use": 1,
+      "new_token": "<ST8>"
+    },
+    {
+      "surface": "Mon",
+      "token_ids": [
+        2303,
+        11095
+      ],
+      "freq": 5,
+      "n": 2,
+      "tokens_saved_per_use": 1,
+      "new_token": "<ST9>"
+    },
+    {
+      "surface": "left",
+      "token_ids": [
+        2115,
+        2303
+      ],
+      "freq": 5,
+      "n": 2,
+      "tokens_saved_per_use": 1,
+      "new_token": "<ST10>"
+    },
+    {
+      "surface": "each",
+      "token_ids": [
+        1817,
+        2303
+      ],
+      "freq": 5,
+      "n": 2,
+      "tokens_saved_per_use": 1,
+      "new_token": "<ST11>"
+    },
+    {
+      "surface": "years:",
+      "token_ids": [
+        1635,
+        25
+      ],
+      "freq": 4,
+      "n": 2,
+      "tokens_saved_per_use": 1,
+      "new_token": "<ST12>"
+    },
+    {
+      "surface": "as many",
+      "token_ids": [
+        438,
+        1657
+      ],
+      "freq": 4,
+      "n": 2,
+      "tokens_saved_per_use": 1,
+      "new_token": "<ST13>"
+    }
+  ]
+}

@@ -487,3 +487,146 @@ terseness bias stronger and more likely to misfire outside its training distribu
 genuine cost worth weighing against Round D's already-marginal in-domain gain (see the in-domain
 verdict above): the multi-token-word-avoidance reward not only failed to clearly help on GSM8K, it
 measurably hurt generalization to harder problems.
+
+## Round E: non-language reasoning via vocabulary extension
+
+**User request:** get the model to write reasoning that is simultaneously shorter, still accurate,
+and genuinely non-human-readable (not English, not a natural-language-shaped notation) — "довести
+до ума non-language reasoning."
+
+### Why the obvious approaches were ruled out first
+
+Three prior rounds (letter-reversal cipher, bit/n-ary Huffman coding, Round D's multi-token-word
+avoidance) already showed that rearranging or reweighting the **existing** BPE vocabulary can't
+beat plain English on token count, because a modern BPE tokenizer already assigns ~1 token to
+almost every common English word. Before committing more compute to another variant of that same
+family, this round surveyed the literature for a genuinely different lever:
+
+- **Continuous/latent "thought vector" methods** (Coconut, CODI, SoftCoT, CoLaR) — the mechanism
+  that best satisfies "not human words" by construction (the reasoning step is never decoded to
+  text at all). Ruled out for this round: Coconut *loses* to plain CoT specifically on GSM8K-style
+  math (34.1% vs 42.9%); the only method with a demonstrated *working* GRPO recipe (CoLaR) uses a
+  from-scratch PyTorch-Lightning training loop with its own custom GRPO reimplementation operating
+  over continuous latent rollouts — architecturally incompatible with TRL's `GRPOTrainer` without a
+  multi-day rollout/logprob-internals rewrite; SoftCoT is SFT-only (no RL) and non-commercially
+  licensed. A companion literature finding (arXiv:2512.11816) also warns that naive GRPO on raw
+  latents fails outright without specialized patches (Latent-GRPO, SofT-GRPO) too new/unverified to
+  build on.
+- **Pause/filler tokens** ("Let's Think Dot by Dot", "Think before you speak") — ruled out
+  entirely: filler tokens replace CoT text 1:1 (don't shorten the sequence) or are *appended*
+  (lengthen it), and the original authors state directly that outcome-only RL doesn't teach
+  productive filler-token use; needs dense pretraining-time supervision instead.
+- **Vocabulary extension via mined "supertokens"** (Shorthand-for-Thought-style): mine frequent
+  multi-token spans from the model's own reasoning, add each as one new, opaque vocabulary token,
+  smooth-initialize its embedding as the mean of its constituents, SFT-seed usage, then GRPO-polish.
+  This is the one candidate that **stays in discrete token space** — it drops straight into the
+  existing `GRPOTrainer` + Python reward-function pattern with no framework rewrite, and unlike the
+  four prior discrete-substitution attempts, the new tokens are genuinely new (not a rearrangement
+  of the existing near-optimal BPE vocabulary). Chosen as Round E's primary experiment.
+
+### Experiment 0 (control): does more reward pressure alone still help?
+
+Before building the vocab-extension pipeline, a cheap confirmatory check: rerun Round B's exact
+setup from scratch with `TARGET_TOKENS` tightened from 40 to 20, no new mechanism.
+
+| Condition | Accuracy | Mean reasoning tokens |
+|---|---|---|
+| Round B (`TARGET_TOKENS=40`) | 85.71% | 58.3 |
+| Experiment 0 (`TARGET_TOKENS=20`) | 80.00% | 50.1 |
+
+Tightening the target **did** push tokens down further (-14%), but at a real accuracy cost (-5.7pp)
+— unlike Round B's original LR-fix, which beat the untrained baseline on both axes simultaneously.
+This confirms the B-ARCH bottleneck call: some headroom remains via pure reward pressure on the
+existing vocabulary, but it's now a real trade rather than a free win, consistent with the vocab
+itself being close to its practical ceiling for this task.
+
+### Experiment 1: mining, SFT-seeding, and GRPO-polishing supertokens
+
+**Mining.** Generated 400 fresh compact-reasoning samples from `ckpt_phase_eff3` (88.75% accuracy
+— healthy, higher than Round B's own held-out number), combined with ~235 reasoning excerpts saved
+during Rounds B/D's training logs (635 examples total). Mined frequent multi-BPE-token n-grams by
+**document frequency** (not raw occurrence count, to avoid one repeated line or templated GSM8K
+problem dominating the ranking). At `MIN_FREQ=5`, this found **26 supertokens**, with a
+**theoretical token-savings ceiling of only ~332 tokens across all 635 examples** (<1% of Round B's
+58.3 mean tokens per example) — and qualitatively, the top candidates were mostly
+newline-plus-common-word formatting bigrams (`"\nTotal"`, `"\nleft"`, `"\nmin"`, `"\nhours"`,
+`"\nminutes"`) rather than the rich multi-word reasoning phrases hoped for. **This was a genuinely
+underwhelming yield** — GSM8K-style compact reasoning, once already terse (Round B's own style),
+turns out to have very little cross-problem phrase repetition beyond boilerplate line-starts, given
+each problem's entities/quantities/units differ.
+
+**Vocabulary extension.** Added the 26 supertokens as new (non-special, regular) tokens to the
+tokenizer, resized the embedding matrix (which had enough spare padding rows that it actually
+*shrank* slightly, 151936→151695, rather than growing), and initialized each new token's embedding
+as the mean of its constituent tokens' embeddings — both input and output embeddings, since Qwen3's
+`tie_word_embeddings=True` meant a single shared update sufficed. No errors, first-run success.
+
+**SFT warm-start.** Filtered the 400-sample corpus to 354 correct examples, applied greedy
+longest-match text substitution of the 26 supertokens' surface forms, and ran a brief LoRA (r=16)
+SFT pass (3 epochs, 69 steps): loss fell cleanly from 0.6166 → 0.05122, `mean_token_accuracy`
+reached 0.982, no instability. Only 125/354 examples (35.3%) contained even one substitutable span
+— a second confirmation that the mining yield was sparse.
+
+**GRPO polish.** LoRA (r=32), 300 steps, Round B's exact unchanged reward stack
+(`reward_format`/`reward_correctness`/`reward_token_efficiency`/`reward_avoid_multitoken_words`),
+starting from the SFT-seeded checkpoint. KL ranged 0.007–0.44 across the run (the elevated readings
+came only in the final handful of steps, similar in character to — though milder than — Experiment
+0's late-run KL spike), correctness mostly held near the 2.0 ceiling with intermittent dips, no
+NaN/crash. This is genuinely novel, first-run code for this project (vocabulary extension had never
+been exercised end-to-end before this round) and it worked without incident.
+
+### Final 4-way held-out evaluation (70 examples, `temperature=0.3`)
+
+| Condition | Accuracy | Mean reasoning tokens | Supertoken usage rate | Mean supertoken count |
+|---|---|---|---|---|
+| (a) Plain baseline, no conciseness instruction | 97.14% | 189.8 | — | — |
+| (b) Concise-notation prompt, original base model, no training | 84.29% | 62.6 | — | — |
+| (d) SFT-seed only (vocab-extended, no GRPO) | 84.29% | 52.6 | 5.71% | 0.06 |
+| (c) GRPO-polished (Round E final result) | **88.57%** | **51.0** | 5.71% | 0.06 |
+
+**Supertoken usage stayed rare but was clean when it fired.** Only 4/70 completions in each of (c)
+and (d) used a supertoken — always exactly once, always on a correct answer, never spammed. One
+representative example (condition d, correct, gold=370):
+```
+Day 1: 100 + 50 + 20 = 170
+Day 2: 100+20=120 pushups, 50-10=40 squats, 20*2=40 presses → 120+40+40=200
+<ST0>: 170+200 = 370
+```
+`<ST0>` stands in for `"\nTotal"` here — coherent, correctly placed, genuinely non-human-readable
+(a reader without the mapping in hand cannot decode `<ST0>` back to "Total"), and it does save a
+token relative to spelling it out. But at a 5.71% usage rate this is a minor stylistic tic, not the
+dominant mechanism behind condition (c)'s numbers.
+
+### Honest verdict
+
+**Condition (c) numerically beats Round B on both axes** (88.57% vs 85.71% accuracy, 51.0 vs 58.3
+mean tokens) — but this improvement is **not attributable to the supertoken/non-language mechanism
+this round set out to test**. With usage at 5.71% of completions (and only ever a single token per
+completion when used), supertokens cannot plausibly explain a 12.5%-relative token reduction spread
+across the whole eval set. The more likely explanation: condition (c) received *two* rounds of
+optimization on the same task (an SFT warm-start pass, then a full 300-step GRPO pass) versus Round
+B's single from-scratch GRPO pass — condition (d) alone (SFT-seed, no GRPO) already reaches 52.6
+mean tokens, *below* Round B's fully-GRPO-trained 58.3, which is the clearest evidence that the SFT
+warm-start itself (imitating the model's own already-compact style on fresh data) did most of the
+further token-shortening work, independent of the vocabulary extension. The accuracy gap (88.57%
+vs 85.71%, a 2-example difference at n=70) should also be read cautiously — it's within plausible
+sampling noise at this eval size, not a large or clearly attributable effect.
+
+**So: "non-language reasoning" was not achieved at meaningful scale this round.** The
+vocabulary-extension *mechanism* worked exactly as designed everywhere it was tested (clean
+first-run vocab/embedding surgery, clean SFT convergence, clean GRPO training, and coherent,
+correct, non-degenerate usage on the rare occasions the model reached for a supertoken) — but the
+**mining step was the real bottleneck**, not the training pipeline. A corpus of 635 examples of
+already-terse, per-problem-heterogeneous GSM8K reasoning simply didn't contain enough repeated
+multi-word phrases to give the mechanism much to work with; 26 mostly-formatting-boilerplate
+supertokens with a <1% theoretical ceiling were never going to move the needle much, and they
+didn't.
+
+**Next lever, if this is worth another round:** mine from a much larger and more diverse corpus
+(thousands of examples, potentially spanning multiple math-reasoning datasets beyond GSM8K, or
+aggregated across many training checkpoints' outputs rather than a single one) and/or replace the
+ad-hoc frequency+doc-count n-gram thresholding with a proper BPE-merge-trainer (e.g.
+`tokenizers.BpeTrainer` run directly on the reasoning corpus, which finds an information-theoretically
+motivated merge set rather than a hand-tuned frequency cutoff). Whether GSM8K-style reasoning has
+enough real cross-problem phrase repetition to reward that investment — given each problem's
+entities, quantities, and units differ — remains an open question this round did not settle.

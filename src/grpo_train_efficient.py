@@ -44,6 +44,21 @@ def extract_reasoning_span(text):
     m = re.search(r"<reasoning>(.*?)</reasoning>", text, re.IGNORECASE | re.DOTALL)
     return m.group(1) if m else ""
 
+WORD_RE = re.compile(r"[A-Za-z']+")
+_MULTITOKEN_CACHE = {}
+
+def word_token_cost(word):
+    """Extra BPE tokens a word costs beyond 1 (0 for single-token words). Cached per lowercased
+    word since the same common words recur constantly across a batch."""
+    lw = word.lower()
+    cached = _MULTITOKEN_CACHE.get(lw)
+    if cached is not None:
+        return cached
+    n = len(_COUNT_TOKENIZER.encode(" " + lw, add_special_tokens=False))
+    cost = max(0, n - 1)
+    _MULTITOKEN_CACHE[lw] = cost
+    return cost
+
 def has_valid_format(text):
     return bool(re.search(r"<reasoning>.*?</reasoning>\s*<answer>.*?</answer>", text, re.IGNORECASE | re.DOTALL))
 
@@ -144,6 +159,27 @@ def reward_token_efficiency(prompts, completions, gold, **kwargs):
         scores.append(_safe(_score)(text))
     return scores
 
+def reward_avoid_multitoken_words(prompts, completions, gold, **kwargs):
+    """Penalize reasoning that leans on words costing >1 BPE token (proper names, specific-object
+    plurals, etc. -- see the empirical word-cost analysis: ~5% of total token cost in this corpus
+    comes from ~300 multi-token words). Only pays out on CORRECT answers, same anti-gaming pattern
+    as reward_token_efficiency."""
+    scores = []
+    for c, g in zip(completions, gold):
+        text = c if isinstance(c, str) else c[0]["content"]
+        def _score(t, g=g):
+            pred = extract_answer_number(t)
+            if pred is None or pred != g:
+                return 0.0
+            reasoning = extract_reasoning_span(t)
+            words = WORD_RE.findall(reasoning)
+            if not words:
+                return 0.0
+            extra_tokens = sum(word_token_cost(w) for w in words)
+            return max(0.0, 1.0 - 0.2 * extra_tokens)
+        scores.append(_safe(_score)(text))
+    return scores
+
 _step_counter = {"n": 0}
 
 def reward_logger(prompts, completions, gold, **kwargs):
@@ -180,8 +216,9 @@ if __name__ == "__main__":
         task_type="CAUSAL_LM",
     )
 
-    reward_funcs = [reward_format, reward_correctness, reward_token_efficiency, reward_logger]
-    reward_weights = [1.0, 1.0, 1.0, 0.0]
+    reward_funcs = [reward_format, reward_correctness, reward_token_efficiency,
+                     reward_avoid_multitoken_words, reward_logger]
+    reward_weights = [1.0, 1.0, 1.0, 1.0, 0.0]
 
     args = GRPOConfig(
         output_dir=OUTPUT_DIR,

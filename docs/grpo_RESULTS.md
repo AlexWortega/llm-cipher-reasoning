@@ -257,7 +257,13 @@ Rounds 1-5 in the parent session (`~/autoresearch-runs/llm-cipher-language/`).
 
 ## Raw data
 - `grpo_train.py` — Round A harness (letter-reversal cipher reward)
-- `grpo_train_efficient.py` — Round B harness (token-efficiency reward)
+- `grpo_train_efficient.py` — Round B/D harness (token-efficiency + multi-token-word-avoidance
+  rewards; Round D adds `reward_avoid_multitoken_words` on top of Round B's reward set)
+- `grpo_final_eval_mtword.py` / `grpo_final_eval_mtword_result.json` /
+  `qualitative_samples_mtword.json` — Round D's three-way held-out comparison and full qualitative
+  samples
+- `build_sft_data.py`, `sft_train.py` — abandoned SFT-then-GRPO approach for Round D (see "Round D"
+  section above for why it was killed); kept for reference, not used in the final Round D run
 - `final_eval.py` / `final_eval_result.json` / `qualitative_samples.json` — Round A's three-way
   held-out comparison and full qualitative samples
 - `final_eval_eff.py` / `final_eval_eff_result.json` / `qualitative_samples_eff.json` — Round B's
@@ -265,8 +271,9 @@ Rounds 1-5 in the parent session (`~/autoresearch-runs/llm-cipher-language/`).
 - `TASK.md`, `PREVIOUS_WORK.md`, `DEEPRESEARCH.md`, `COMPUTE.md`, `DATA.md`, `BUDGET.md` — the
   autoresearch-skill planning documents for this run
 - On eva02: `~/grpo_cipher/ckpt_phase0` (warmup), `~/grpo_cipher/ckpt_phase1` (Round A result),
-  `~/grpo_cipher/ckpt_phase_eff` (Round B, in progress), `phase0.log` / `phase1.log` /
-  `phase_eff.log` (full training logs), `reward_log_phase*.jsonl` (periodic qualitative samples)
+  `~/grpo_cipher/ckpt_phase_eff` (Round B, in progress), `~/grpo_cipher/ckpt_phase_eff_mtword`
+  (Round D result), `phase0.log` / `phase1.log` / `phase_eff.log` / `phase_eff_mtword.log` (full
+  training logs), `reward_log_phase*.jsonl` (periodic qualitative samples)
 
 ## Round A (scaled), out-of-domain evaluation: AIME 2026 + TerminalBench 2.0
 
@@ -351,3 +358,91 @@ grade-school-level cipher-reasoning, this is an honest, plausible outcome rather
 that demands further tuning: the training objective simply never touched anything resembling
 AIME-level math or shell/tool-use, so no transfer (in either direction) is exactly what a
 faithful measurement should show.
+
+## Round D: GRPO with explicit multi-token-word-avoidance reward
+
+Follow-up to Round B's token-efficiency win: since BPE tokenizers already assign a single token to
+most common English words, plain token-count pressure (Round B's `reward_token_efficiency`) is a
+blunt instrument — it can't distinguish "10 tokens of common short words" from "10 tokens because
+of two rare multi-token words". A word-cost analysis of the GSM8K reasoning corpus found only
+~5.3% of total token cost comes from multi-token words (mostly proper names and specific-object
+plurals), so the theoretical ceiling for a word-substitution-style reward is low — but it's a
+different, orthogonal axis from raw token count, worth testing directly rather than assuming.
+
+**Abandoned approach: SFT on stopword-stripped targets.** The first attempt was supervised
+fine-tuning on GSM8K reasoning text with a 4-tier stopword-deletion scheme applied to the targets
+(regex-based, dropping determiners/prepositions/pronouns), followed by GRPO on top. This was
+killed mid-run (66% through a 468-step SFT) after inspecting the actual training targets: naive
+regex stopword-stripping produces grammatically broken text, e.g. "average number shooting stars
+observed three them" (missing "of"/"for"/"over" — the stripping has no grammatical awareness, it
+just deletes any token matching the stopword list regardless of whether the surrounding sentence
+still parses). Training the model to imitate broken English as its base reasoning style was judged
+too risky — SFT would lock in whatever damage the stripping introduced, with no correctness signal
+to catch it, unlike RL where a reward function can reject bad outputs directly. Reused Round B's
+proven from-scratch GRPO recipe instead, adding one new reward term on top rather than pre-biasing
+the model via SFT.
+
+**New reward: `reward_avoid_multitoken_words`.** Added to `grpo_train_efficient.py` alongside the
+existing `reward_format` / `reward_correctness` / `reward_token_efficiency` (all weight 1.0). For
+each completion's `<reasoning>` span: extract words via `[A-Za-z']+`, look up each word's BPE cost
+beyond 1 token (cached per lowercased word), and score `max(0, 1.0 - 0.2 * extra_tokens)` — same
+zero-on-wrong-answer gating as `reward_token_efficiency` so the model can't game the reward by
+giving up on correctness in exchange for terse-but-wrong output.
+
+**Training**: LoRA r=32, LR=1.5e-5, beta=0.06, 300 steps, full GSM8K training set, from-scratch
+(no RESUME_FROM — a fresh base-model start, not built on any prior checkpoint), same shared RTX
+A6000 (eva02). Completed in **113 minutes** (6763s), no crashes, no GPU contention. KL stayed
+bounded throughout (0.01-0.26, no sustained excursions past ~0.26 — comparable to Round B's healthy
+range). `reward_correctness/mean` stayed close to the 2.0 ceiling for most of the run (occasional
+dips to ~1.6-1.9). `reward_avoid_multitoken_words/mean` showed real spread and real signal — not
+flat at either extreme — ranging roughly 0.2-1.0 step to step, settling around 0.7-0.9 by the final
+steps (final logged step: 0.7125). Final `train_loss=0.02869`.
+
+### Three-way held-out comparison (70 examples, `temperature=0.3`)
+
+| Condition | Accuracy | Mean reasoning tokens | Mean multi-token-word cost |
+|---|---|---|---|
+| (a) Plain baseline, no conciseness instruction | 95.71% | 187.1 | 5.39 |
+| (b) Concise-notation prompt, base model, no training | 85.71% | 62.9 | 0.76 |
+| (c) Concise-notation prompt, **GRPO-trained (Round D, mtword reward)** | 84.29% | 62.5 | 0.71 |
+
+**This is a null-to-slightly-negative result.** Condition (c) is barely distinguishable from
+condition (b) (untrained, prompt-only): 0.4 fewer tokens and 0.05 lower multi-token-word cost per
+completion — both differences are well within noise at n=70 — while accuracy actually *dropped*
+1.4 points below the untrained baseline. The new reward did produce real, non-degenerate training
+signal (visible spread during training, coherent qualitative outputs — see sample below), but it
+did not translate into a measurable held-out win on the metric it targets, let alone a win-win like
+Round B's LR-fixed run.
+
+**Direct comparison to Round B (`ckpt_phase_eff3`, 85.71% accuracy / 58.3 mean tokens):** Round D
+is worse on every axis that overlaps — lower accuracy (84.29% vs 85.71%), more tokens (62.5 vs
+58.3), and its own new metric (multi-token-word cost) only nudged from 0.76 to 0.71, a ~7% relative
+reduction that doesn't clear the noise bar at this sample size. Round D does not beat Round B; if
+anything the extra reward term, without adjusting reward weights or training length to compensate,
+slightly diluted the correctness/token-efficiency signal Round B already had working.
+
+**Likely explanation:** the word-cost analysis motivating this reward found multi-token words are
+only ~5.3% of total reasoning-corpus token cost — a small, low-ceiling target. GSM8K reasoning is
+already dominated by short common words and bare numbers/operators (see the qualitative sample
+below), so there wasn't much multi-token-word usage left to cut once Round B's terseness pressure
+was already in effect. A representative correct sample (45 tokens, multi-token-word cost=2):
+```
+50 * 1/2 = 25 to Brandon
+25 remaining
+25 * 3/5 = 15 to Charlie
+25 - 15 = 10 kept
+```
+This reads as coherent, genuine terse arithmetic — no degeneration — but it's stylistically almost
+identical to Round B's outputs, consistent with the reward having little new ground left to move.
+
+### Verdict
+
+**A validated negative result, not a bug.** Unlike Round A/B's original LR=2e-6 issue, this run's
+weight movement and reward signal both look healthy (real KL, real reward spread, no flat/broken
+training) — so the flat held-out result reflects a genuine ceiling on this particular reward axis
+for GSM8K-scale reasoning, not a misconfigured run. Combined with the earlier Huffman-coding and
+literal-cipher findings (all of which made token usage *worse*, not better), this reinforces the
+project's central finding: for BPE-tokenized English on grade-school arithmetic reasoning, Round
+B's direct token-count reward already captures nearly all the available efficiency gain, and
+further hand-designed sub-objectives (word-substitution, multi-token-avoidance) have little
+headroom left to add.

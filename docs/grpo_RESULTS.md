@@ -262,6 +262,8 @@ Rounds 1-5 in the parent session (`~/autoresearch-runs/llm-cipher-language/`).
 - `grpo_final_eval_mtword.py` / `grpo_final_eval_mtword_result.json` /
   `qualitative_samples_mtword.json` — Round D's three-way held-out comparison and full qualitative
   samples
+- `aime2026_eval_mtword.py` / `aime2026_mtword_trained.json` — Round D's AIME 2026 out-of-domain
+  check (base reused from Round A's `aime2026_base.json`)
 - `build_sft_data.py`, `sft_train.py` — abandoned SFT-then-GRPO approach for Round D (see "Round D"
   section above for why it was killed); kept for reference, not used in the final Round D run
 - `final_eval.py` / `final_eval_result.json` / `qualitative_samples.json` — Round A's three-way
@@ -446,3 +448,42 @@ project's central finding: for BPE-tokenized English on grade-school arithmetic 
 B's direct token-count reward already captures nearly all the available efficiency gain, and
 further hand-designed sub-objectives (word-substitution, multi-token-avoidance) have little
 headroom left to add.
+
+### AIME 2026 out-of-domain check
+
+Same question as Round A's scaled out-of-domain check: does GSM8K-scale GRPO training on
+`ckpt_phase_eff_mtword` transfer (positively, negatively, or not at all) to harder olympiad-level
+math? Measured on all 30 problems of the MathArena AIME 2026 set, `temperature=0.3`,
+`max_new_tokens=2048`, using the same concise-instruction `SYSTEM_PROMPT` the model was trained
+with. The base/untrained number is **reused from Round A's measurement**
+(`results/aime2026_base.json`) rather than re-run, since Round A's base condition already used an
+equivalent concise-instruction system prompt on the same untrained base model — re-measuring it
+would just add noise, not new information, to the untrained reference point.
+
+| Condition | Accuracy |
+|---|---|
+| Base (untrained, concise-instruction system prompt) — Round A measurement | 36.67% (11/30) |
+| Round D trained (`ckpt_phase_eff_mtword` LoRA) | **23.33% (7/30)** |
+
+**Unlike Round A's scaled check (which showed exactly flat transfer, 36.67% both), this is a real
+regression** — 13.3 points down, not just noise at n=30. Inspecting the wrong answers shows a
+concrete, plausible failure mode: on several genuinely hard problems the model attempts the
+correct approach but the terseness training pushes it to skip normalization/summarization steps,
+occasionally producing degenerate output. One example (gold=669): the model correctly derives
+`10^100 * (1/8)` symbolically, then — instead of stopping at a clean closed form — spells out the
+literal ~100-digit product token by token, runs past any point of a coherent answer, and the
+trailing-digits fallback in the answer extractor grabs a meaningless chunk of that digit string as
+the "answer." This looks like a direct side effect of the reward stack: `reward_token_efficiency`
+and `reward_avoid_multitoken_words` both push toward short, symbol-only completions during
+training on GSM8K (where problems always resolve in a handful of arithmetic steps), and that
+learned bias doesn't degrade gracefully on AIME-scale problems that sometimes call for a longer,
+more structured derivation or an explicit final-simplification step.
+
+**Verdict:** where Round A's scaled model showed no transfer either way, Round D's does show a
+real negative transfer effect on hard math — plausibly *because* it was trained with two separate
+terseness-pressuring rewards (Round B's token-count reward, stacked with Round D's new
+word-avoidance reward) rather than Round A's single cipher-adherence objective, making the
+terseness bias stronger and more likely to misfire outside its training distribution. This is a
+genuine cost worth weighing against Round D's already-marginal in-domain gain (see the in-domain
+verdict above): the multi-token-word-avoidance reward not only failed to clearly help on GSM8K, it
+measurably hurt generalization to harder problems.

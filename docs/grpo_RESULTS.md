@@ -264,6 +264,10 @@ Rounds 1-5 in the parent session (`~/autoresearch-runs/llm-cipher-language/`).
   samples
 - `aime2026_eval_mtword.py` / `aime2026_mtword_trained.json` — Round D's AIME 2026 out-of-domain
   check (base reused from Round A's `aime2026_base.json`)
+- `explore_huffman_binary.py`, `explore_huffman_nary.py`, `explore_stopword_variants.py`,
+  `explore_stopword_tiers.py` / `results/explore_*_samples.json`, `results/explore_single_token_syms.json`
+  — the pre-Round-D encoding probes (binary/n-ary Huffman, stopword deletion tiers) that motivated
+  `reward_avoid_multitoken_words`; see the "Exploration" note in the Round D section above for numbers
 - `build_sft_data.py`, `sft_train.py` — abandoned SFT-then-GRPO approach for Round D (see "Round D"
   section above for why it was killed); kept for reference, not used in the final Round D run
 - `final_eval.py` / `final_eval_result.json` / `qualitative_samples.json` — Round A's three-way
@@ -370,6 +374,26 @@ of two rare multi-token words". A word-cost analysis of the GSM8K reasoning corp
 ~5.3% of total token cost comes from multi-token words (mostly proper names and specific-object
 plurals), so the theoretical ceiling for a word-substitution-style reward is low — but it's a
 different, orthogonal axis from raw token count, worth testing directly rather than assuming.
+
+**Exploration: can any hand-designed encoding beat plain text on tokens?** Before committing to a
+reward, four candidate encodings were probed directly against the real Qwen tokenizer on GSM8K
+reasoning text (`explore_huffman_binary.py`, `explore_huffman_nary.py`,
+`explore_stopword_variants.py`, `explore_stopword_tiers.py`; raw samples in
+`results/explore_*_samples.json`):
+
+| Encoding | Result |
+|---|---|
+| Binary Huffman coding (top-300 words, bit-string codes) | **2.71x more tokens** than plain text |
+| n-ary Huffman coding (radix-340, single-BPE-token CJK glyph alphabet) | **1.32x more tokens** |
+| Stopword deletion, tier 1 (determiners/prepositions) | **-7.7% tokens** |
+| Stopword deletion, tier 4 (+ pronouns/aux-verbs/adverbs, most aggressive) | **-11.8% tokens** |
+
+Both Huffman variants made things *worse* — bit-strings and even a 340-symbol single-token
+CJK alphabet still need multiple symbols to beat a word BPE already encodes as 1 token, and the
+`[bracket]`-escaped out-of-vocabulary fallback added further overhead. Only pure **deletion**
+(not substitution) gave a real, monotonic saving, which directly motivated `reward_avoid_multitoken_words`
+below as an RL-safe way to lean on that finding without SFT's grammar-breaking risk (see next
+paragraph).
 
 **Abandoned approach: SFT on stopword-stripped targets.** The first attempt was supervised
 fine-tuning on GSM8K reasoning text with a 4-tier stopword-deletion scheme applied to the targets

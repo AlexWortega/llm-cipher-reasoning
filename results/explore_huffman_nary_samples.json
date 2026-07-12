@@ -1,0 +1,22 @@
+[
+  {
+    "plain": "It rained for a total of 3.79+4.5+3.95+3.09+4.67 = <<3.79+4.5+3.95+3.09+4.67=20>>20 inches\nThe rain period is from March through July for a total of 5 months so the average rainfall is 20/5 = <<20/5=4>>4 inches of rain per month",
+    "huffman": "\u4ff8 rained \u503c \u5041 \u504c \u504f 3.79+4.5+3.95+3.09+4.67 = <<3.79+4.5+3.95+3.09+4.67=20>>20 \u4faf\n\u5055 rain period \u504e \u500d March \u5053\u4f30 July \u503c \u5041 \u504c \u504f 5 \u4f58 \u5043 \u5055 \u4f30 rainfall \u504e 20/5 = <<20/5=4>>4 \u4faf \u504f rain \u501e \u4f9b"
+  },
+  {
+    "plain": "Thomas and his friends took 1/4*200 = <<1/4*200=50>>50 bars.\nThe total number of bars left in the box was 200-50 = <<200-50=150>>150 bars.\nSince there are five of them sharing, each of them got 50/5 = <<50/5=10>>10 bars.\nAfter a friend returned 5 bars, there were 150 + 5 = <<150+5=155>>155 bars in the box.\nPiper took five fewer bars, that is 50 - 5 = <<50-5=45>>45 bars.\nThe total remaining bars left in the box is 155 - 45 = <<155-45=110>>110 bars.",
+    "huffman": "Thomas \u5034 \u5011 \u4f0d \u4f5b 1/4*200 = <<1/4*200=50>>50 \u4e9e.\n\u5055 \u504c \u503b \u504f \u4e9e \u4fe8 \u5048 \u5055 \u4f0b \u4ffe 200-50 = <<200-50=150>>150 \u4e9e.\n\u4fd8 \u502b \u502d \u4ef5 \u504f \u4f34 sharing, \u5028 \u504f \u4f34 \u4f50 50/5 = <<50/5=10>>10 \u4e9e.\n\u4feb \u5041 \u4e03 returned 5 \u4e9e, \u502b \u4fdd 150 + 5 = <<150+5=155>>155 \u4e9e \u5048 \u5055 \u4f0b.\nPiper \u4f5b \u4ef5 \u5053\u4f34 \u4e9e, \u5029 \u504e 50 - 5 = <<50-5=45>>45 \u4e9e.\n\u5055 \u504c \u4f7c \u4e9e \u4fe8 \u5048 \u5055 \u4f0b \u504e 155 - 45 = <<155-45=110>>110 \u4e9e."
+  },
+  {
+    "plain": "Gilbert planted 3 + 1 + 2 = <<3+1+2=6>>6 herb plants.\nHe gained a basil plant when one of the basil plants seeded a new plant, so he had 6 + 1 = <<6+1=7>>7 plants.\nThe rabbit ate both mint plants, so Gilbert had 7 - 2 = <<7-2=5>>5 herb plants when spring ended.",
+    "huffman": "Gilbert planted 3 + 1 + 2 = <<3+1+2=6>>6 herb \u4e27.\n\u5047 gained \u5041 basil plant \u4f60 \u4fc5 \u504f \u5055 basil \u4e27 seeded \u5041 \u4f43 plant, \u5043 \u5047 \u4fed 6 + 1 = <<6+1=7>>7 \u4e27.\n\u5055 rabbit \u4f5d \u4f5a mint \u4e27, \u5043 Gilbert \u4fed 7 - 2 = <<7-2=5>>5 herb \u4e27 \u4f60 spring ended."
+  },
+  {
+    "plain": "Marta bought five textbooks on sale, for a total of 5 * 10 = $<<5*10=50>>50.\nThree textbooks from the bookstore had a cost of 3 * 40 = $<<3*40=120>>120.\nThat means that Marta spent in total 50 + 40 + 120 = $<<50+40+120=210>>210 on textbooks.",
+    "huffman": "Marta \u4fa5 \u4ef5 textbooks \u5026 \u5053\u4f8d, \u503c \u5041 \u504c \u504f 5 * 10 = $<<5*10=50>>50.\n\u4fc3 textbooks \u500d \u5055 bookstore \u4fed \u5041 \u501c \u504f 3 * 40 = $<<3*40=120>>120.\n\u5029 \u4fd9 \u5029 Marta \u4fb4 \u5048 \u504c 50 + 40 + 120 = $<<50+40+120=210>>210 \u5026 textbooks."
+  },
+  {
+    "plain": "To buy regular food items individually, they cost $5 + $3 + $3 = $<<5+3+3=11>>11.\nTo buy kids food items individually, they cost $3 + $2 + $2 = $<<3+2+2=7>>7.\nIf you buy the special burger meal, you save $11 - $9.50 = $<<11-9.5=1.50>>1.50.\nIf you buy the kid's meal, you save $7 - $5 = $<<7-5=2>>2.\nMr. Parker buys 4 special burger meals, bringing his discount to 4 x $1.50 = $<<4*1.50=6>>6.\nHe buys 2 kid's meals, bringing his discount to 2 x $2 = $<<2*2=4>>4.\nThe total savings for Mr. Parker is $6 + $4 = $<<6+4=10>>10.",
+    "huffman": "\u5049 \u4f53 regular \u4f26 \u4e14 individually, \u5013 \u501c $5 + $3 + $3 = $<<5+3+3=11>>11.\n\u5049 \u4f53 \u4e82 \u4f26 \u4e14 individually, \u5013 \u501c $3 + $2 + $2 = $<<3+2+2=7>>7.\n\u5015 \u4edd \u4f53 \u5055 special burger meal, \u4edd \u4e08 $11 - $9.50 = $<<11-9.5=1.50>>1.50.\n\u5015 \u4edd \u4f53 \u5055 kid'\u502a meal, \u4edd \u4e08 $7 - $5 = $<<7-5=2>>2.\n\u4e42. Parker \u4e69 4 special burger meals, bringing \u5011 \u4efd \u5049 4 \u503e $1.50 = $<<4*1.50=6>>6.\n\u5047 \u4e69 2 kid'\u502a meals, bringing \u5011 \u4efd \u5049 2 \u503e $2 = $<<2*2=4>>4.\n\u5055 \u504c \u5053\u4f4d \u503c \u4e42. Parker \u504e $6 + $4 = $<<6+4=10>>10."
+  }
+]

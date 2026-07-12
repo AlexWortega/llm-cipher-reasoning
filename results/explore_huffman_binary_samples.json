@@ -1,0 +1,22 @@
+[
+  {
+    "plain": "It rained for a total of 3.79+4.5+3.95+3.09+4.67 = <<3.79+4.5+3.95+3.09+4.67=20>>20 inches\nThe rain period is from March through July for a total of 5 months so the average rainfall is 20/5 = <<20/5=4>>4 inches of rain per month",
+    "huffman": "11010100 [rained] 101001 110110 01001 0110 3.79+4.5+3.95+3.09+4.67 = <<3.79+4.5+3.95+3.09+4.67=20>>20 111100110\n000 [rain] [period] 01010 11110101 [March] [through] [July] 101001 110110 01001 0110 5 1111011111 110111 000 1011101101 [rainfall] 01010 20/5 = <<20/5=4>>4 111100110 0110 [rain] 1010000 101011010"
+  },
+  {
+    "plain": "Thomas and his friends took 1/4*200 = <<1/4*200=50>>50 bars.\nThe total number of bars left in the box was 200-50 = <<200-50=150>>150 bars.\nSince there are five of them sharing, each of them got 50/5 = <<50/5=10>>10 bars.\nAfter a friend returned 5 bars, there were 150 + 5 = <<150+5=155>>155 bars in the box.\nPiper took five fewer bars, that is 50 - 5 = <<50-5=45>>45 bars.\nThe total remaining bars left in the box is 155 - 45 = <<155-45=110>>110 bars.",
+    "huffman": "[Thomas] 100001 0010110 1001100100 1111110110 1/4*200 = <<1/4*200=50>>50 11110011110.\n000 01001 100100 0110 11110011110 10101100 111110 000 1001011101 11100110 200-50 = <<200-50=150>>150 11110011110.\n01110100 1110010 001000 1000000101 0110 1100001111 [sharing], 1101000 0110 1100001111 1111000011 50/5 = <<50/5=10>>10 11110011110.\n10110001 110110 [friend] [returned] 5 11110011110, 1110010 10000010 150 + 5 = <<150+5=155>>155 11110011110 111110 000 1001011101.\n[Piper] 1111110110 1000000101 [fewer] 11110011110, 1101011 01010 50 - 5 = <<50-5=45>>45 11110011110.\n000 01001 011111101 11110011110 10101100 111110 000 1001011101 01010 155 - 45 = <<155-45=110>>110 11110011110."
+  },
+  {
+    "plain": "Gilbert planted 3 + 1 + 2 = <<3+1+2=6>>6 herb plants.\nHe gained a basil plant when one of the basil plants seeded a new plant, so he had 6 + 1 = <<6+1=7>>7 plants.\nThe rabbit ate both mint plants, so Gilbert had 7 - 2 = <<7-2=5>>5 herb plants when spring ended.",
+    "huffman": "[Gilbert] [planted] 3 + 1 + 2 = <<3+1+2=6>>6 [herb] [plants].\n111010 [gained] 110110 [basil] [plant] 1111111110 00111101 0110 000 [basil] [plants] [seeded] 110110 1110000000 [plant], 110111 111010 10110011 6 + 1 = <<6+1=7>>7 [plants].\n000 [rabbit] 1111111011 1111110100 [mint] [plants], 110111 [Gilbert] 10110011 7 - 2 = <<7-2=5>>5 [herb] [plants] 1111111110 [spring] [ended]."
+  },
+  {
+    "plain": "Marta bought five textbooks on sale, for a total of 5 * 10 = $<<5*10=50>>50.\nThree textbooks from the bookstore had a cost of 3 * 40 = $<<3*40=120>>120.\nThat means that Marta spent in total 50 + 40 + 120 = $<<50+40+120=210>>210 on textbooks.",
+    "huffman": "[Marta] 101111000 1000000101 [textbooks] 1100011 [sale], 101001 110110 01001 0110 5 * 10 = $<<5*10=50>>50.\n00101010 [textbooks] 11110101 000 [bookstore] 10110011 110110 1001101 0110 3 * 40 = $<<3*40=120>>120.\n1101011 01111100 1101011 [Marta] 111101100 111110 01001 50 + 40 + 120 = $<<50+40+120=210>>210 1100011 [textbooks]."
+  },
+  {
+    "plain": "To buy regular food items individually, they cost $5 + $3 + $3 = $<<5+3+3=11>>11.\nTo buy kids food items individually, they cost $3 + $2 + $2 = $<<3+2+2=7>>7.\nIf you buy the special burger meal, you save $11 - $9.50 = $<<11-9.5=1.50>>1.50.\nIf you buy the kid's meal, you save $7 - $5 = $<<7-5=2>>2.\nMr. Parker buys 4 special burger meals, bringing his discount to 4 x $1.50 = $<<4*1.50=6>>6.\nHe buys 2 kid's meals, bringing his discount to 2 x $2 = $<<2*2=4>>4.\nThe total savings for Mr. Parker is $6 + $4 = $<<6+4=10>>10.",
+    "huffman": "00110 1111001110 [regular] 1011011010 [items] [individually], 0011100 1001101 $5 + $3 + $3 = $<<5+3+3=11>>11.\n00110 1111001110 11010101011 1011011010 [items] [individually], 0011100 1001101 $3 + $2 + $2 = $<<3+2+2=7>>7.\n0100001 0101100101 1111001110 000 [special] [burger] [meal], 0101100101 [save] $11 - $9.50 = $<<11-9.5=1.50>>1.50.\n0100001 0101100101 1111001110 000 [kid]'1110001 [meal], 0101100101 [save] $7 - $5 = $<<7-5=2>>2.\n10111011110. [Parker] 11000101111 4 [special] [burger] [meals], [bringing] 0010110 1000100001 00110 4 110011 $1.50 = $<<4*1.50=6>>6.\n111010 11000101111 2 [kid]'1110001 [meals], [bringing] 0010110 1000100001 00110 2 110011 $2 = $<<2*2=4>>4.\n000 01001 [savings] 101001 10111011110. [Parker] 01010 $6 + $4 = $<<6+4=10>>10."
+  }
+]

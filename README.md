@@ -9,9 +9,25 @@ instead of just prompted? Two linked lines of research:
    in a letter-reversal cipher via prompting alone.
 2. **GRPO RL training for token efficiency** (`src/`, documented in `docs/grpo_RESULTS.md`):
    training Qwen3-4B-Instruct-2507 with GRPO (TRL) so the model *learns* — rather than is merely
-   prompted — to reason in a compact form. Round A trains toward the letter-reversal cipher; Round B
-   pivots to directly rewarding fewer reasoning tokens (the cipher itself turned out not to save
-   tokens under BPE tokenization — see `docs/grpo_RESULTS.md`).
+   prompted — to reason in a compact form.
+   - **Round A** trains toward the letter-reversal cipher; scaled up and checked for out-of-domain
+     transfer (AIME 2026, TerminalBench 2.0) — none found, in either direction.
+   - **Round B** pivots to directly rewarding fewer reasoning tokens (the cipher itself turned out
+     not to save tokens under BPE tokenization) — the project's one clean, verified win-win (+1.4pp
+     accuracy, -7.8% tokens vs prompting alone, after fixing a LoRA learning-rate bug).
+   - **Pre-Round-D exploration** (`explore_huffman_*.py`, `explore_stopword_*.py`) probes whether any
+     hand-designed encoding (Huffman coding, stopword deletion) can beat plain text on tokens —
+     Huffman always makes things worse (2.71x/1.32x more tokens); only stopword *deletion* saves
+     real tokens (-11.8% at its most aggressive).
+   - **Round D** adds a reward against multi-token English words — null in-domain, and a real
+     negative transfer to AIME 2026 (23.33% vs base 36.67%).
+   - **Round E** surveys continuous-latent-thought and pause-token literature (both ruled out),
+     then builds a vocabulary-extension pipeline (mine "supertokens" from the model's own compact
+     reasoning, SFT-seed, GRPO-polish) — the pipeline itself works cleanly, but the mining corpus
+     was too small/homogeneous to give the mechanism much to compress; the resulting numbers beat
+     Round B but are attributable to the extra training pass, not the non-language mechanism.
+
+   See `docs/grpo_RESULTS.md` for the full writeup of every round, including negative results.
 
 ## Layout
 
